@@ -34,6 +34,7 @@ export default function RootLayout({
             <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="/">Home</Link>
             <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="/dev">dev</Link>
             <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="/projects">Projects</Link>
+            <a className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="https://vert.romantcham.fr">Vert</a>
           </nav>
           <ThemeToggle />
         </header>
