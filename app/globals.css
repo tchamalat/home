@@ -2,11 +2,13 @@
 
 :root {
   --background: #ffffff;
+  --background_2: #b6b6b6;
   --foreground: #171717;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background_2: var(--background_2);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -15,8 +17,14 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
+    --background_2: #232323;
     --foreground: #ededed;
   }
+}
+
+header {
+  padding: 1rem;
+  background-color: var(--color-background_2);
 }
 
 body {
