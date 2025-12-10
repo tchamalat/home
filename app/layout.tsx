@@ -36,8 +36,6 @@ export default function RootLayout({
           <nav>
             <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-[#383838]" href="/dev">dev</Link>
             <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-[#383838]" href="/projects">Projects</Link>
-            <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-[#383838]" href="/blog">Blog</Link>
-            <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-[#383838]" href="/contact">Contact</Link>
           </nav>
         </header>
         {children}
