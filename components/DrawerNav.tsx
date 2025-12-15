@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export default function DrawerNav() {
   const closeDrawer = () => {
-    const checkbox = document.getElementById("nav-drawer")
+    const checkbox = document.getElementById("nav-drawer") as HTMLInputElement | null
     if (checkbox) checkbox.checked = false
   }
 
