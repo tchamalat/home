@@ -6,7 +6,7 @@ export default function Home() {
     <main>
       <Section>
         <h1 className="text-3xl font-semibold text-foreground">
-          Nothing to see here for now
+          Nothing to see here for now.
         </h1>
       </Section>
     </main>
