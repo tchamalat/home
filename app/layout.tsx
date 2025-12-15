@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { ThemeScript } from "@/components/ThemeScript";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
+import { Menu } from 'lucide-react';
+import DrawerNav from "@/components/DrawerNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,16 +28,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <header className="flex p-4">
-          <ThemeScript />
-          <nav className="py-1 w-fit bg-background_2 rounded-full text-3xl font-semibold text-foreground">
-            <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="/">Home</Link>
-            <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="/dev">dev</Link>
-            <Link className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="/projects">Projects</Link>
-            <a className="px-3 py-1.5 transition-colors rounded-full hover:bg-background_3" href="https://vert.romantcham.fr">Vert</a>
-          </nav>
-          <ThemeToggle />
+      <body className="min-h-screen p-6 bg-base-300">
+        <header className="bg-base-100 rounded-full">
+          <div className="drawer">
+            <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
+
+            <div className="drawer-content">
+              <nav className="navbar px-3 bg-base-100 shadow-sm rounded-full font-semibold">
+
+                <label htmlFor="nav-drawer" className="btn btn-ghost btn-circle md:hidden">
+                  <Menu size={24} />
+                </label>
+
+                <div className="hidden md:flex flex-1 gap-2">
+                  <Link className="btn btn-ghost rounded-full text-xl" href="/">Home</Link>
+                  <Link className="btn btn-ghost rounded-full text-xl" href="/dev">dev</Link>
+                  <Link className="btn btn-ghost rounded-full text-xl" href="/projects">Projects</Link>
+                  <a className="btn btn-ghost rounded-full text-xl" href="https://vert.romantcham.fr">Vert</a>
+                </div>
+
+                <ThemeSwitcher className="ml-auto" />
+              </nav>
+            </div>
+
+            <div className="drawer-side z-50">
+              <label htmlFor="nav-drawer" className="drawer-overlay"></label>
+              <DrawerNav />
+            </div>
+          </div>
         </header>
         {children}
       </body>

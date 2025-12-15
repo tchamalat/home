@@ -1,54 +1,9 @@
 @import "tailwindcss";
-
-:root {
-  --background: #e1e1e1;
-  --background_2: #aba9a9;
-  --background_3: #989898;
-
-  --background_proxmox: oklch(55% 0.123 38.172);
-  --background_proxmox_hover: #989898;
-  --foreground_proxmox: #000000;
-  --foreground_proxmox_hover: oklch(55% 0.123 38.172);
-
-  --foreground: #000000;
-}
-
-.dark {
-  --background: #080808;
-  --background_2: #212121;
-  --background_3: #383838;
-
-  --background_proxmox: #262626;
-  --background_proxmox_hover: oklch(40.8% 0.123 38.172);
-  --foreground_proxmox: #9f2d00;
-  --foreground_proxmox_hover: oklch(70.8% 0 0);
-
-  --foreground: #ededed;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-background_2: var(--background_2);
-  --color-background_3: var(--background_3);
-  --color-background_proxmox: var(--background_proxmox);
-  --color-background_proxmox_hover: var(--background_proxmox_hover);
-  --color-foreground_proxmox: var(--foreground_proxmox);
-  --color-foreground_proxmox_hover: var(--foreground_proxmox_hover);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-* {
-  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
-}
-
-header {
-  background-color: var(--color-background);
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@plugin "daisyui" {
+  themes: light --default, night --prefersdark;
+  root: ":root";
+  include: ;
+  exclude: ;
+  prefix: ;
+  logs: true;
 }
