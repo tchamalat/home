@@ -1,14 +1,5 @@
-import type { Config } from "tailwindcss";
-
-interface DaisyUIConfig extends Config {
-  daisyui?: {
-    themes?: string[];
-    darkTheme?: string;
-  };
-}
-
-const config: DaisyUIConfig = {
-  darkMode: 'class',
+const config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -19,12 +10,9 @@ const config: DaisyUIConfig = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: [
-      "light",
-      "night",
-    ],
-    darkTheme: "night",
+    themes: ["dark", "light"],
+    darkTheme: "dark",
   },
-};
+} as any;
 
 export default config;

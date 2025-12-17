@@ -3,14 +3,14 @@ import { Section } from "@/components/Section";
 export default function Home() {
   return (
     <main>
-      <Section>
-        <h1 className="text-3xl font-semibold text-foreground">
-          Let's dev a little.
-        </h1>
+      <Section title="Let's dev a little.">
+        <p className="text-foreground"> 
+          Here are some links to my development projects.
+        </p>
       </Section>
-      <Section>
+      <Section title="Proxmox - my virtualization platform">
         <a
-          className="btn btn-secondary"
+          className="btn btn-primary"
           href="https://pve.romantcham.fr"
         >
           Proxmox

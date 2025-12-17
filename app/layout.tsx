@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="night">
       <body className="min-h-screen p-6 bg-base-300">
         <header className="bg-base-100 rounded-full">
           <div className="drawer">
