@@ -1,12 +1,28 @@
+import type { Metadata } from "next";
+import Main from "@/components/Main"
+import { Title } from "@/components/Title";
 import { Section } from "@/components/Section";
 import Image from "next/image";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Roman's projects",
+  description: "My personal projects.",
+};
+
+export default function Projects() {
   return (
-    <main className="w-full"> 
+    <Main>
+      <Title>
+        Project
+      </Title>
       <Section title="Here's some of my personal projects">
         <p className="text-foreground"> 
           I really like doing stuff.
+        </p>
+      </Section>
+      <Section title="My home server">
+        <p>
+          Économique, performant and safe, My home server hosts some pf my projects.
         </p>
       </Section>
       <Section>
@@ -22,7 +38,10 @@ export default function Home() {
           />
           website.
         </h2>
+        <p>
+          This website is my first ever framework based website creation.
+        </p>
       </Section>
-    </main>
+    </Main>
   );
 }

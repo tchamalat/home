@@ -163,7 +163,7 @@ export function CrackleSection() {
   }, [drawBaseCrust, syncCanvasSize]);
 
   return (
-    <Section title="Lave craquelée" className="relative overflow-hidden">
+    <Section title="Test with AI" className="relative overflow-hidden">
       <div
         ref={containerRef}
         onPointerEnter={() => {
@@ -197,3 +197,5 @@ export function CrackleSection() {
     </Section>
   );
 }
+
+

@@ -1,20 +1,29 @@
+import type { Metadata } from "next";
 import { Section } from "@/components/Section";
+
+export const metadata: Metadata = {
+  title: "Roman's dev center",
+  description: "My personal projects.",
+};
 
 export default function Home() {
   return (
     <main>
       <Section title="Let's dev a little.">
         <p className="text-foreground"> 
-          Here are some links to my development projects.
+          Here is my page for usefull dev links.
         </p>
       </Section>
-      <Section title="Proxmox - my virtualization platform">
+      <Section title="Proxmox, my virtualization platform">
         <a
-          className="btn btn-primary"
+          className="btn btn-primary w-fit"
           href="https://pve.romantcham.fr"
         >
           Proxmox
         </a>
+        <p>
+          Proxmox is the base of my home server project containing this website.
+        </p>
       </Section>
     </main>
   );

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Roman's home",
   description: "Home page of romantcham.fr",
 };
 
@@ -29,18 +29,21 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="night">
       <body className="min-h-screen p-6 bg-base-300">
-        <header className="bg-base-100 rounded-full">
+        <header className="bg-base-100 mb-6 rounded-full">
           <div className="drawer">
             <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
 
             <div className="drawer-content">
               <nav className="navbar px-3 bg-base-100 shadow-sm rounded-full font-semibold">
 
-                <label htmlFor="nav-drawer" className="btn btn-ghost btn-circle md:hidden">
-                  <Menu size={24} />
-                </label>
+                <div className="sm:hidden">
+                  <label htmlFor="nav-drawer" className="btn btn-ghost btn-circle">
+                    <Menu size={24} />
+                  </label>
+                  <Link className="btn btn-ghost rounded-full text-xl" href="/">Home</Link>
+                </div>
 
-                <div className="hidden md:flex flex-1 gap-2">
+                <div className="hidden sm:flex flex-1 gap-2">
                   <Link className="btn btn-ghost rounded-full text-xl" href="/">Home</Link>
                   <Link className="btn btn-ghost rounded-full text-xl" href="/dev">dev</Link>
                   <Link className="btn btn-ghost rounded-full text-xl" href="/projects">Projects</Link>
