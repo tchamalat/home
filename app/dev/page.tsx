@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Main from "@/components/Main"
 import { Section } from "@/components/Section";
+import DockerLogs from "@/components/DockerLogs";
 
 export const metadata: Metadata = {
   title: "Roman's dev center",
@@ -26,6 +27,7 @@ export default function Home() {
           Proxmox is the base of my home server project containing this website.
         </p>
       </Section>
+      <DockerLogs />
     </Main>
   );
 }
