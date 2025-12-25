@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Main from "@/components/Main"
-import { Title } from "@/components/Title";
 import { Section } from "@/components/Section";
 import Image from "next/image";
 
@@ -11,10 +10,7 @@ export const metadata: Metadata = {
 
 export default function Projects() {
   return (
-    <Main>
-      <Title>
-        Project
-      </Title>
+    <Main title="Projects">
       <Section title="Here's some of my personal projects">
         <p className="text-foreground"> 
           I really like doing stuff.
@@ -22,7 +18,7 @@ export default function Projects() {
       </Section>
       <Section title="My home server">
         <p>
-          Économique, performant and safe, My home server hosts some pf my projects.
+          Economic, performant and safe, My home server hosts some pf my projects.
         </p>
       </Section>
       <Section>

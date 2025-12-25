@@ -68,10 +68,10 @@ export function CrackleSection2() {
         className="relative isolate overflow-hidden rounded-3xl p-8"
       >
         <div className="relative z-10 flex flex-col gap-3">
-          <p className="max-w-2xl text-base text-orange-50/80">
+          <p className="max-w-2xl text-base">
             Weird innit?
           </p>
-          <p className="text-sm text-orange-100/60">
+          <p className="text-base text-sm">
             Without AI this time
           </p>
         </div>

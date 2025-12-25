@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Main from "@/components/Main"
 import { Section } from "@/components/Section";
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <main>
+    <Main title="Dev">
       <Section title="Let's dev a little.">
         <p className="text-foreground"> 
           Here is my page for usefull dev links.
@@ -25,6 +26,6 @@ export default function Home() {
           Proxmox is the base of my home server project containing this website.
         </p>
       </Section>
-    </main>
+    </Main>
   );
 }

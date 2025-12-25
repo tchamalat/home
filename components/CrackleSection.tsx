@@ -176,13 +176,13 @@ export function CrackleSection() {
           prevPointRef.current = null;
         }}
         onPointerMove={handlePointerMove}
-        className="relative isolate overflow-hidden rounded-3xl border border-orange-900/30 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 p-8 shadow-inner"
+        className="relative isolate overflow-hidden rounded-3xl border border-orange-900/30 from-neutral-950 via-neutral-900 to-neutral-950 p-8 shadow-inner"
       >
         <div className="relative z-10 flex flex-col gap-3">
-          <p className="max-w-2xl text-base text-orange-50/80">
+          <p className="max-w-2xl text-base">
             Weird innit?
           </p>
-          <p className="text-sm text-orange-100/60">
+          <p className="text-sm text-base">
             full AI but not ugly
           </p>
         </div>
