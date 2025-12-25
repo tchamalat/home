@@ -24,9 +24,9 @@ export async function GET(request: NextRequest) {
 
             logStream.on('data', (chunk) => {
               const log = chunk.toString('utf8');
-              const lines = log.split('\n').filter(line => line.trim());
+              const lines = log.split('\n').filter((line: string) => line.trim());
               
-              lines.forEach(line => {
+              lines.forEach((line: string) => {
                 // Nettoyer les caractères de contrôle Docker
                 const cleanLine = line.replace(/[\x00-\x08]/g, '');
                 const data = JSON.stringify({
@@ -45,7 +45,11 @@ export async function GET(request: NextRequest) {
 
         // Cleanup on close
         request.signal.addEventListener('abort', () => {
-          logStreams.forEach(stream => stream.destroy());
+          logStreams.forEach((stream: any) => {
+            if (stream && typeof stream.destroy === 'function') {
+              stream.destroy();
+            }
+          });
           controller.close();
         });
       } catch (error) {
