@@ -13,7 +13,7 @@ export default function DockerLogs() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const logsEndRef = useRef<HTMLDivElement>(null);
-  const maxLogs = 100; // Limiter le nombre de logs affichés
+  const maxLogs = 30;
 
   useEffect(() => {
     const eventSource = new EventSource('/api/docker/logs');
@@ -27,7 +27,6 @@ export default function DockerLogs() {
         const logEntry: LogEntry = JSON.parse(event.data);
         setLogs((prev) => {
           const newLogs = [...prev, logEntry];
-          // Garder seulement les X derniers logs
           return newLogs.slice(-maxLogs);
         });
       } catch (error) {
@@ -73,7 +72,7 @@ export default function DockerLogs() {
         </div>
       </div>
 
-      <div className="mockup-code bg-base-200 max-h-[600px] overflow-y-auto">
+      <div className="mockup-code bg-base-200 overflow-y-auto">
         {logs.length === 0 ? (
           <pre data-prefix="$" className="text-base-content/50">
             <code>Waiting for logs...</code>
