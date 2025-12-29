@@ -70,7 +70,7 @@ export default function DashboardPage() {
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
             <h2 className="card-title">Section 2</h2>
-            <p>Continuez à construire...</p>
+            <p>Continuez à construire... ouaw !</p>
             <div className="card-actions justify-end">
               <button className="btn btn-primary btn-sm">Voir plus</button>
             </div>
