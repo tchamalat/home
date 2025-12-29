@@ -33,7 +33,7 @@ export default function RootLayout({
           <div className="drawer">
             <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
 
-            <div className="drawer-content">
+            <div className="flex justify-between pr-3 items-center drawer-content">
               <nav className="navbar px-3 bg-base-100 shadow-sm rounded-full font-semibold">
 
                 <div className="sm:hidden">
@@ -49,12 +49,13 @@ export default function RootLayout({
                   <Link className="btn btn-ghost rounded-full text-xl" href="/projects">Projects</Link>
                   <a className="btn btn-ghost rounded-full text-xl" href="https://vert.romantcham.fr">Vert</a>
                 </div>
-
-                <Link className="btn btn-ghost rounded-full text-xl ml-auto" href="/login">
+              </nav>
+              <div className="flex">
+                <Link className="btn btn-ghost rounded-full text-xl" href="/login">
                   Login
                 </Link>
-                <ThemeSwitcher className="ml-auto" />
-              </nav>
+                <ThemeSwitcher/>
+              </div>
             </div>
 
             <div className="drawer-side z-50">
