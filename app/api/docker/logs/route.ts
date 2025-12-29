@@ -1,7 +1,12 @@
 import Docker from 'dockerode';
 import { NextRequest } from 'next/server';
 
-const docker = new Docker({ socketPath: '/var/run/docker.sock' });
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+// Linux container (prod): relies on default /var/run/docker.sock or DOCKER_HOST.
+// For local Windows dev, prefer setting DOCKER_HOST to a remote/WSL daemon if needed.
+const docker = new Docker();
 
 export async function GET(request: NextRequest) {
   const encoder = new TextEncoder();
@@ -9,6 +14,8 @@ export async function GET(request: NextRequest) {
   const stream = new ReadableStream({
     async start(controller) {
       try {
+        // Quick connectivity check to fail fast instead of 502 at the edge
+        await docker.ping();
         const containers = await docker.listContainers();
         
         const logStreams = await Promise.all(
@@ -54,7 +61,11 @@ export async function GET(request: NextRequest) {
         });
       } catch (error) {
         console.error('Error streaming logs:', error);
-        controller.error(error);
+        // Emit an SSE error message to the client before closing
+        const errMsg = JSON.stringify({ error: 'docker_logs_unavailable', message: (error as Error)?.message || 'Unknown error' });
+        controller.enqueue(encoder.encode(`event: error\n`));
+        controller.enqueue(encoder.encode(`data: ${errMsg}\n\n`));
+        controller.close();
       }
     },
   });
