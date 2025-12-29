@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
       '@': '../',
     },
   },
+  serverExternalPackages: [
+    'dockerode',
+    'docker-modem',
+    'ssh2',
+    'cpu-features'
+  ],
 };
 
 export default nextConfig;
