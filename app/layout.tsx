@@ -27,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="night">
-      <body className="min-h-screen p-6 bg-base-300">
+    <html lang="en" data-theme="night" className="bg-base-300">
+      <body className="min-h-screen p-6 bg-base-300 flex flex-col">
         <header className="bg-base-100 mb-6 rounded-full">
           <div className="drawer">
             <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
@@ -50,6 +50,9 @@ export default function RootLayout({
                   <a className="btn btn-ghost rounded-full text-xl" href="https://vert.romantcham.fr">Vert</a>
                 </div>
 
+                <Link className="btn btn-ghost rounded-full text-xl ml-auto" href="/login">
+                  Login
+                </Link>
                 <ThemeSwitcher className="ml-auto" />
               </nav>
             </div>

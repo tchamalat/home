@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <Main title="Dev">
+    <Main title="Dev center">
       <Section title="Let's dev a little.">
         <p className="text-foreground"> 
           Here is my page for usefull dev links.

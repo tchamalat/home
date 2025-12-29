@@ -16,7 +16,7 @@ export default function Projects() {
           I really like doing stuff.
         </p>
       </Section>
-      <Section title="My home server">
+      <Section title="My home server" link="projects/home-server">
         <p>
           Economic, performant and safe, My home server hosts some pf my projects.
         </p>
