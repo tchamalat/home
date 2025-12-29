@@ -4,6 +4,8 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+export const dynamic = 'force-dynamic';
+
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
