@@ -1,12 +1,12 @@
-FROM node:25-alpine AS deps
-RUN apk add --no-cache libc6-compat
-# Install pnpm globally (corepack not available in this image)
+FROM node:25-slim AS deps
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+# Install pnpm globally
 RUN npm i -g pnpm@10
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod
 
-FROM node:25-alpine AS builder
+FROM node:25-slim AS builder
 # Install pnpm globally
 RUN npm i -g pnpm@10
 WORKDIR /app
@@ -16,7 +16,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm run build
 
-FROM node:25-alpine AS runner
+FROM node:25-slim AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
