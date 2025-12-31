@@ -5,11 +5,12 @@ import { requireAdmin } from "@/lib/auth";
 // POST /api/admin/groups/[groupId]/members - Add member to group (Admin only)
 export async function POST(
   req: NextRequest,
-  { params }: { params: { groupId: string } }
+  { params }: { params: Promise<{ groupId: string }> }
 ) {
   const session = await requireAdmin(req);
   if (session instanceof NextResponse) return session;
 
+  const { groupId } = await params;
   const { userId } = await req.json();
 
   if (!userId) {
@@ -20,7 +21,7 @@ export async function POST(
   const existing = await prisma.groupMember.findUnique({
     where: {
       groupId_userId: {
-        groupId: params.groupId,
+        groupId,
         userId,
       },
     },
@@ -32,7 +33,7 @@ export async function POST(
 
   const member = await prisma.groupMember.create({
     data: {
-      groupId: params.groupId,
+      groupId,
       userId,
       addedById: session.user.id,
     },
@@ -49,11 +50,12 @@ export async function POST(
 // DELETE /api/admin/groups/[groupId]/members - Remove member from group
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { groupId: string } }
+  { params }: { params: Promise<{ groupId: string }> }
 ) {
   const session = await requireAdmin(req);
   if (session instanceof NextResponse) return session;
 
+  const { groupId } = await params;
   const { userId } = await req.json();
 
   if (!userId) {
@@ -63,7 +65,7 @@ export async function DELETE(
   await prisma.groupMember.delete({
     where: {
       groupId_userId: {
-        groupId: params.groupId,
+        groupId,
         userId,
       },
     },
@@ -75,13 +77,14 @@ export async function DELETE(
 // GET /api/admin/groups/[groupId]/members - Get all members of a group
 export async function GET(
   req: NextRequest,
-  { params }: { params: { groupId: string } }
+  { params }: { params: Promise<{ groupId: string }> }
 ) {
   const session = await requireAdmin(req);
   if (session instanceof NextResponse) return session;
 
+  const { groupId } = await params;
   const members = await prisma.groupMember.findMany({
-    where: { groupId: params.groupId },
+    where: { groupId },
     include: {
       group: {
         select: {
