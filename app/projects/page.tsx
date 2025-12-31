@@ -2,40 +2,54 @@ import type { Metadata } from "next";
 import Main from "@/components/Main"
 import { Section } from "@/components/Section";
 import Image from "next/image";
+import { cookies } from "next/headers";
+import { defaultLocale, getDictionary, isLocale, Locale, filterDictByPrefix } from "@/lib/i18n";
 
-export const metadata: Metadata = {
-  title: "Roman's projects",
-  description: "My personal projects.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = cookies();
+  const langCookie = (await cookieStore).get("lang")?.value;
+  const locale: Locale = isLocale(langCookie) ? langCookie : defaultLocale;
+  const dict = getDictionary(locale);
 
-export default function Projects() {
+  return {
+    title: dict["meta.projects.title"],
+    description: dict["meta.projects.description"],
+  };
+}
+
+export default async function Projects() {
+  const cookieStore = cookies();
+  const langCookie = (await cookieStore).get("lang")?.value;
+  const locale: Locale = isLocale(langCookie) ? langCookie : defaultLocale;
+  const dict = getDictionary(locale);
+
   return (
-    <Main title="Projects">
-      <Section title="Here's some of my personal projects">
+    <Main title={dict["projects.title"]}>
+      <Section title={dict["projects.section1.title"]}>
         <p className="text-foreground"> 
-          I really like doing stuff.
+          {dict["projects.section1.text"]}
         </p>
       </Section>
-      <Section title="My home server" link="projects/home-server">
+      <Section title={dict["projects.section2.title"]} link="projects/home-server">
         <p>
-          Economic, performant and safe, My home server hosts some pf my projects.
+          {dict["projects.section2.text"]}
         </p>
       </Section>
       <Section>
         <h2 className="flex flex-wrap text-2xl font-bold mb-4">
-          This
+          {dict["projects.section3.title"]}
         <Image
-            className="mx-2 pt-1.5 in-data-[theme=night]:invert"
+            className="mx-2 in-data-[theme=night]:invert"
             src="/next.svg"
             alt="Next.js logo"
-            width={100}
-            height={20}
+            width={90}
+            height={18}
             priority
           />
-          website.
+          {dict["projects.section3.title2"]}
         </h2>
         <p>
-          This website is my first ever framework based website creation.
+          {dict["projects.section3.text"]}
         </p>
       </Section>
     </Main>

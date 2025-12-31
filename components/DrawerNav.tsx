@@ -9,7 +9,7 @@ export default function DrawerNav() {
   }
 
   return (
-    <ul className="menu m-6 p-4 w-fit bg-base-200 text-base-content text-2xl rounded-4xl">
+    <ul className="menu m-6 p-3 grid gap-2 w-fit bg-base-200 text-base-content text-2xl rounded-4xl">
       <li>
         <Link href="/" onClick={closeDrawer} className="rounded-full">
           Home

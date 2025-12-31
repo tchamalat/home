@@ -1,0 +1,177 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// NextAuth required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Application models
+enum UserRole {
+  ADMIN
+  FAMILY
+  GUEST
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          UserRole  @default(GUEST)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts         Account[]
+  sessions         Session[]
+  photos           Photo[]
+  groupMemberships GroupMember[]
+  joinRequests     JoinRequest[]
+  connectionLogs   ConnectionLog[]
+  addRequests      AddMemberRequest[] @relation("RequestedBy")
+  receivedRequests AddMemberRequest[] @relation("TargetUser")
+
+  @@index([email])
+  @@index([role])
+}
+
+model Group {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members      GroupMember[]
+  photos       Photo[]
+  joinRequests JoinRequest[]
+
+  @@index([createdAt])
+}
+
+model GroupMember {
+  id        String   @id @default(cuid())
+  groupId   String
+  userId    String
+  addedAt   DateTime @default(now())
+  addedById String?
+
+  group User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([userId])
+  @@index([groupId])
+}
+
+model Photo {
+  id          String   @id @default(cuid())
+  filename    String
+  originalName String
+  path        String
+  size        Int
+  mimeType    String
+  width       Int?
+  height      Int?
+  description String?
+  isPublic    Boolean  @default(false)
+  uploadedAt  DateTime @default(now())
+  uploadedBy  String
+
+  uploader User    @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
+  groups   Group[]
+
+  @@index([uploadedBy])
+  @@index([uploadedAt])
+  @@index([isPublic])
+}
+
+model JoinRequest {
+  id        String   @id @default(cuid())
+  groupId   String
+  userId    String
+  message   String?
+  status    String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([groupId, userId])
+  @@index([userId])
+  @@index([status])
+}
+
+model AddMemberRequest {
+  id            String   @id @default(cuid())
+  requestedById String
+  targetUserId  String
+  targetEmail   String?
+  message       String?
+  status        String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  requestedBy User  @relation("RequestedBy", fields: [requestedById], references: [id], onDelete: Cascade)
+  targetUser  User? @relation("TargetUser", fields: [targetUserId], references: [id], onDelete: Cascade)
+
+  @@index([requestedById])
+  @@index([status])
+}
+
+model ConnectionLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String // LOGIN, LOGOUT, FAILED_LOGIN
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([action])
+}

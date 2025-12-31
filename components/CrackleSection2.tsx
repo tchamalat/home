@@ -1,9 +1,14 @@
 "use client";
 
+import type { PointerEvent } from "react";
 import { Section } from "@/components/Section";
 import { useCallback, useRef, useEffect } from "react";
 
-export function CrackleSection2() {
+type Props = {
+  dict: Record<"crackle2.title" | "crackle2.text1" | "crackle2.text2" | "crackle2.whiten" | "crackle2.darken", string>;
+};
+
+export function CrackleSection2({ dict }: Props) {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -52,10 +57,10 @@ export function CrackleSection2() {
       }, [darken, syncCanvasSize]);
     
     return (
-    <Section title="Tests without AI">
+    <Section title={dict["crackle2.title"]}>
         <div className="flex space-x-4">
-          <button className="btn btn-primary" onClick={whiten}>whiten</button>
-          <button className="btn btn-primary" onClick={darken}>darken</button>
+          <button className="btn btn-primary" onClick={whiten}>{dict["crackle2.darken"]}</button>
+          <button className="btn btn-primary" onClick={darken}>{dict["crackle2.whiten"]}</button>
         </div>
         <div
         ref={containerRef}
@@ -69,10 +74,10 @@ export function CrackleSection2() {
       >
         <div className="relative z-10 flex flex-col gap-3">
           <p className="max-w-2xl text-base">
-            Weird innit?
+            {dict["crackle2.text1"]}
           </p>
           <p className="text-base text-sm">
-            Without AI this time
+            {dict["crackle2.text2"]}
           </p>
         </div>
         <canvas

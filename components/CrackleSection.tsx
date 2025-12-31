@@ -6,11 +6,15 @@ import { Section } from "@/components/Section";
 
 type Point = { x: number; y: number };
 
+type Props = {
+  dict: Record<"crackle.title" | "crackle.text1" | "crackle.text2", string>;
+};
+
 function randomBetween(min: number, max: number) {
   return Math.random() * (max - min) + min;
 }
 
-export function CrackleSection() {
+export function CrackleSection({ dict }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const prevPointRef = useRef<Point | null>(null);
@@ -163,7 +167,7 @@ export function CrackleSection() {
   }, [drawBaseCrust, syncCanvasSize]);
 
   return (
-    <Section title="Test with AI" className="relative overflow-hidden">
+    <Section title={dict["crackle.title"]} className="relative overflow-hidden">
       <div
         ref={containerRef}
         onPointerEnter={() => {
@@ -180,10 +184,10 @@ export function CrackleSection() {
       >
         <div className="relative z-10 flex flex-col gap-3">
           <p className="max-w-2xl text-base">
-            Weird innit?
+            {dict["crackle.text1"]}
           </p>
-          <p className="text-sm text-base">
-            full AI but not ugly
+          <p className="text-base text-sm">
+            {dict["crackle.text2"]}
           </p>
         </div>
         <canvas

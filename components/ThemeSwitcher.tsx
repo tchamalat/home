@@ -26,8 +26,8 @@ export default function ThemeSwitcher({ className }: { className?: string }) {
         checked={theme === 'night'}
         onChange={toggleTheme}
     />
-    <Sun className="swap-off fill-current" size={24} />
-    <Moon className="swap-on fill-current" size={24} />
+    <Moon className="swap-off fill-current" size={24} />
+    <Sun className="swap-on fill-current" size={24} />
     </label>
   );
 }

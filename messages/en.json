@@ -1,0 +1,68 @@
+{
+  "lang.en": "EN",
+  "lang.fr": "FR",
+
+  "splash.welcome": "Welcome",
+
+  "meta.home.title": "Home",
+  "meta.home.description": "Home page of romantcham.fr",
+  "meta.dev.title": "Dev center",
+  "meta.dev.description": "My personal projects.",
+  "meta.projects.title": "Projects",
+  "meta.projects.description": "My personal projects.",
+  "meta.homeserver.title": "Home server project",
+  "meta.homeserver.description": "How does my home server work.",
+
+  "nav.home": "Home",
+  "nav.dev": "Dev",
+  "nav.projects": "Projects",
+  "nav.vert": "Vert",
+
+  "action.login": "Login",
+  "action.settings": "Settings",
+
+  "crackle.title": "Test with AI",
+  "crackle.text1": "Weird innit?",
+  "crackle.text2": "full AI but not ugly",
+
+  "crackle2.title": "Test without AI",
+  "crackle2.text1": "Less weird, right?",
+  "crackle2.text2": "Not as beautiful",
+  "crackle2.darken": "Darken",
+  "crackle2.whiten": "Whiten",
+
+  "home.title": "Home",
+  "home.section1.title": "What is this site's purpose",
+  "home.section1.text": "Hello, I'm Roman and I created this website for my own use and as a portfolio piece.",
+  "home.section2.title": "What does this site contain",
+  "home.section2.text": "This site contains some of my personal projects, a dev center, and the login allows my family and friends to use some useful tools.",
+
+  "dev.title": "Dev center",
+  "dev.section1.title": "Let's dev a little.",
+  "dev.section1.text": "Here is my page for useful dev links.",
+  "dev.section2.title": "Proxmox, my virtualization platform",
+  "dev.section2.text": "Proxmox is the base of my home server project containing this website.",
+
+  "projects.title": "Projects",
+  "projects.section1.title": "Here's some of my personal projects",
+  "projects.section1.text": "I really like doing stuff.",
+  "projects.section2.title": "My home server",
+  "projects.section2.text": "Economic, performant and safe, My home server hosts some of my projects.",
+  "projects.section3.title": "This",
+  "projects.section3.title2": "website",
+  "projects.section3.text": "This website is my first ever framework based website creation.",
+
+  "homeserver.title": "Home server",
+  "homeserver.section1.title": "Hardware choices",
+  "homeserver.section1.text": "My server is a NUC in my room connected to my network.",
+
+  "login.title": "Login",
+  "login.button": "Sign in with Google",
+  "login.description": "Sign in to access your personal space",
+
+  "dockerlogs.title": "Docker Logs",
+  "dockerlogs.connected": "Connected",
+  "dockerlogs.disconnected": "Disconnected",
+  "dockerlogs.clear": "Clear",
+  "dockerlogs.waiting": "Waiting for logs..."
+}

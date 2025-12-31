@@ -1,0 +1,68 @@
+{
+  "lang.en": "EN",
+  "lang.fr": "FR",
+
+  "splash.welcome": "Bienvenue",
+
+  "meta.home.title": "Accueil",
+  "meta.home.description": "Page d'accueil de romantcham.fr",
+  "meta.dev.title": "Centre de Dev",
+  "meta.dev.description": "Mes projets personnels.",
+  "meta.projects.title": "Projets",
+  "meta.projects.description": "Mes projets personnels.",
+  "meta.homeserver.title": "Projet de serveur domestique",
+  "meta.homeserver.description": "Comment fonctionne mon serveur domestique.",
+
+  "nav.home": "Accueil",
+  "nav.dev": "Dev",
+  "nav.projects": "Projets",
+  "nav.vert": "Vert",
+
+  "action.login": "Connexion",
+  "action.settings": "Paramètres",
+
+  "crackle.title": "Test avec IA",
+  "crackle.text1": "Bizarre, n'est-ce pas ?",
+  "crackle.text2": "100% IA mais pas moche",
+
+  "crackle2.title": "Test sans IA",
+  "crackle2.text1": "Moins bizarre, n'est il pas ?",
+  "crackle2.text2": "Mais pas aussi beau",
+  "crackle2.darken": "Assombrir",
+  "crackle2.whiten": "Éclaircir",
+
+  "home.title": "Accueil",
+  "home.section1.title": "Quel est le but de ce site",
+  "home.section1.text": "Bonjour, je suis Roman et j'ai créé ce site pour mon usage personnel et en tant que portfolio.",
+  "home.section2.title": "Que contient ce site",
+  "home.section2.text": "Ce site contient certains de mes projets personnels, un centre de développement, et la connexion permet à ma famille et mes amis d'utiliser certains outils utiles.",
+
+  "dev.title": "Centre de Dev",
+  "dev.section1.title": "Développons un peu.",
+  "dev.section1.text": "Voici ma page comportant quelques outils de développement utiles.",
+  "dev.section2.title": "Proxmox, ma plateforme de virtualisation",
+  "dev.section2.text": "Proxmox est la base de mon projet de serveur domestique contenant ce site web.",
+
+  "projects.title": "Projets",
+  "projects.section1.title": "Voici quelques-uns de mes projets personnels",
+  "projects.section1.text": "J'aime vraiment bricoller des choses.",
+  "projects.section2.title": "Mon serveur domestique",
+  "projects.section2.text": "Économique, performant et sûr, mon serveur domestique héberge certains de mes projets.",
+  "projects.section3.title": "Ce site",
+  "projects.section3.title2": "",
+  "projects.section3.text": "Ce site web est ma première création de site basée sur un framework.",
+
+  "homeserver.title": "Serveur domestique",
+  "homeserver.section1.title": "Choix du matériel",
+  "homeserver.section1.text": "Mon serveur est un NUC dans ma chambre connecté à mon réseau.",
+
+  "login.title": "Connexion",
+  "login.button": "Connexion avec Google",
+  "login.description": "Connectez-vous pour accéder à votre espace personnel",
+
+  "dockerlogs.title": "Logs Docker",
+  "dockerlogs.connected": "Connecté",
+  "dockerlogs.disconnected": "Déconnecté",
+  "dockerlogs.clear": "Effacer",
+  "dockerlogs.waiting": "En attente de logs..."
+}

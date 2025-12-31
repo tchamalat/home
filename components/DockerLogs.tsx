@@ -1,7 +1,7 @@
 'use client';
 
 import { Section } from '@/components/Section';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface LogEntry {
   container: string;
@@ -9,10 +9,13 @@ interface LogEntry {
   timestamp: string;
 }
 
-export default function DockerLogs() {
+type Props = {
+  dict: Record<"dockerlogs.title" | "dockerlogs.connected" | "dockerlogs.disconnected" | "dockerlogs.clear" | "dockerlogs.waiting", string>;
+};
+
+export default function DockerLogs({ dict }: Props) {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [isConnected, setIsConnected] = useState(false);
-  const logsEndRef = useRef<HTMLDivElement>(null);
   const maxLogs = 30;
 
   useEffect(() => {
@@ -44,10 +47,6 @@ export default function DockerLogs() {
     };
   }, []);
 
-  useEffect(() => {
-    logsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [logs]);
-
   const getLogColor = (log: string) => {
     if (log.toLowerCase().includes('error')) return 'text-error';
     if (log.toLowerCase().includes('warn')) return 'text-warning';
@@ -58,16 +57,16 @@ export default function DockerLogs() {
   return (
     <Section>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-bold">Docker Logs</h2>
+        <h2 className="text-2xl font-bold">{dict["dockerlogs.title"]}</h2>
         <div className="flex items-center gap-2">
           <div className={`badge ${isConnected ? 'badge-success' : 'badge-error'}`}>
-            {isConnected ? 'Connected' : 'Disconnected'}
+            {isConnected ? dict["dockerlogs.connected"] : dict["dockerlogs.disconnected"]}
           </div>
           <button 
-            className="btn btn-sm btn-ghost"
+            className="btn btn-sm btn-ghost rounded-full"
             onClick={() => setLogs([])}
           >
-            Clear
+            {dict["dockerlogs.clear"]}
           </button>
         </div>
       </div>
@@ -75,20 +74,19 @@ export default function DockerLogs() {
       <div className="mockup-code bg-base-200 overflow-y-auto">
         {logs.length === 0 ? (
           <pre data-prefix="$" className="text-base-content/50">
-            <code>Waiting for logs...</code>
+            <code>{dict["dockerlogs.waiting"]}</code>
           </pre>
         ) : (
           logs.map((entry, index) => (
             <pre 
               key={index} 
               data-prefix={`[${entry.container}]`}
-              className={getLogColor(entry.log)}
+              className={`${getLogColor(entry.log)}`}
             >
-              <code>{entry.log}</code>
+              <code className="pl-3 inline-block">{entry.log}</code>
             </pre>
           ))
         )}
-        <div ref={logsEndRef} />
       </div>
     </Section>
   );
