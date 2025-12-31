@@ -12,7 +12,8 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY . .
-# Generate Prisma Client
+# Generate Prisma Client avec une URL temporaire (pas de connexion réelle)
+ENV DATABASE_URL="postgresql://user:pass@localhost:5432/db?schema=public"
 RUN pnpm exec prisma generate
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm run build
