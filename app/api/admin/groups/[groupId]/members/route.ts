@@ -39,7 +39,7 @@ export async function POST(
     },
     include: {
       group: {
-        select: { name: true, email: true, image: true },
+        select: { name: true, image: true },
       },
     },
   });
