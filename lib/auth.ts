@@ -13,24 +13,24 @@ export async function requireAuth(req: NextRequest) {
 
 export async function requireAdmin(req: NextRequest) {
   const session = await requireAuth(req);
-  
+
   if (session instanceof NextResponse) return session;
-  
-  if (session.user.role !== "ADMIN") {
+
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const isAdmin = adminEmail && session.user?.email === adminEmail;
+
+  if (!isAdmin) {
     return NextResponse.json({ error: "Accès refusé - Admin uniquement" }, { status: 403 });
   }
-  
+
   return session;
 }
 
 export async function requireFamilyOrAdmin(req: NextRequest) {
   const session = await requireAuth(req);
-  
+
   if (session instanceof NextResponse) return session;
-  
-  if (session.user.role !== "ADMIN" && session.user.role !== "FAMILY") {
-    return NextResponse.json({ error: "Accès refusé - Famille ou Admin uniquement" }, { status: 403 });
-  }
-  
+
+  // Sans gestion de rôles côté DB, on considère tous les utilisateurs authentifiés comme autorisés.
   return session;
 }
