@@ -1,4 +1,5 @@
-// This is your Prisma schema file for a family photo sharing app
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
@@ -9,22 +10,22 @@ datasource db {
 }
 
 // ============================================
-// NextAuth Models
+// NextAuth Models (Required)
 // ============================================
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String? @db.Text
-  access_token       String? @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -70,19 +71,20 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  // Relations
+  // NextAuth relations
   accounts         Account[]
   sessions         Session[]
+  
+  // App relations
   photos           Photo[]
   groupMemberships GroupMember[]
   joinRequests     JoinRequest[]
   connectionLogs   ConnectionLog[]
-  requestedBy      AddMemberRequest[] @relation("RequestedBy")
-  targetOf         AddMemberRequest[] @relation("TargetUser")
+  addRequestsFrom  AddMemberRequest[] @relation("RequestedBy")
+  addRequestsTo    AddMemberRequest[] @relation("TargetUser")
 
   @@index([email])
   @@index([role])
-  @@map("users")
 }
 
 model Group {
@@ -92,13 +94,11 @@ model Group {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // Relations
   members      GroupMember[]
   photos       Photo[]
   joinRequests JoinRequest[]
 
   @@index([createdAt])
-  @@map("groups")
 }
 
 model GroupMember {
@@ -108,38 +108,34 @@ model GroupMember {
   addedAt   DateTime @default(now())
   addedById String?
 
-  // Relations
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
   @@unique([groupId, userId])
   @@index([userId])
   @@index([groupId])
-  @@map("group_members")
 }
 
 model Photo {
-  id            String   @id @default(cuid())
-  filename      String
-  originalName  String
-  path          String
-  size          Int
-  mimeType      String
-  width         Int?
-  height        Int?
-  description   String?
-  isPublic      Boolean  @default(false)
-  uploadedAt    DateTime @default(now())
-  uploadedBy    String
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  path         String
+  size         Int
+  mimeType     String
+  width        Int?
+  height       Int?
+  description  String?
+  isPublic     Boolean  @default(false)
+  uploadedAt   DateTime @default(now())
+  uploadedBy   String
 
-  // Relations
-  uploader User     @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
+  uploader User    @relation(fields: [uploadedBy], references: [id], onDelete: Cascade)
   groups   Group[]
 
   @@index([uploadedBy])
   @@index([uploadedAt])
   @@index([isPublic])
-  @@map("photos")
 }
 
 model JoinRequest {
@@ -151,14 +147,12 @@ model JoinRequest {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
   group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
   user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([groupId, userId])
   @@index([userId])
   @@index([status])
-  @@map("join_requests")
 }
 
 model AddMemberRequest {
@@ -171,13 +165,11 @@ model AddMemberRequest {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  // Relations
   requestedBy User  @relation("RequestedBy", fields: [requestedById], references: [id], onDelete: Cascade)
-  targetUser  User  @relation("TargetUser", fields: [targetUserId], references: [id], onDelete: Cascade)
+  targetUser  User? @relation("TargetUser", fields: [targetUserId], references: [id], onDelete: Cascade)
 
   @@index([requestedById])
   @@index([status])
-  @@map("add_member_requests")
 }
 
 model ConnectionLog {
@@ -188,11 +180,9 @@ model ConnectionLog {
   userAgent String?
   createdAt DateTime @default(now())
 
-  // Relations
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([createdAt])
   @@index([action])
-  @@map("connection_logs")
 }

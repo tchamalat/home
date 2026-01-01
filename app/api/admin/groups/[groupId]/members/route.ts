@@ -38,8 +38,8 @@ export async function POST(
       addedById: session.user.id,
     },
     include: {
-      group: {
-        select: { id: true, name: true },
+      user: {
+        select: { name: true, email: true, image: true },
       },
     },
   });
@@ -86,7 +86,7 @@ export async function GET(
   const members = await prisma.groupMember.findMany({
     where: { groupId },
     include: {
-      group: {
+      user: {
         select: {
           id: true,
           name: true,
