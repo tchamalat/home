@@ -12,6 +12,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY . .
+ENV DOCKER_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm run build
 
