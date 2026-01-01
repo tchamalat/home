@@ -1,35 +1,9 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:16-alpine
-    container_name: romantcham-db
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: romantcham
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      POSTGRES_DB: romantcham
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U romantcham"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   app:
     build: .
     container_name: romantcham-app
     restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
-      DATABASE_URL: "postgresql://romantcham:${POSTGRES_PASSWORD:-changeme}@postgres:5432/romantcham?schema=public"
       NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
@@ -43,11 +17,3 @@ services:
     volumes:
       # Pour le socket Docker (si vous voulez garder DockerLogs)
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
-volumes:
-  postgres_data:
-    driver: local
-
-networks:
-  app-network:
-    driver: bridge

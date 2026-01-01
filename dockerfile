@@ -12,10 +12,6 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY . .
-# Accept DATABASE_URL as build argument (or use default for build)
-ARG DATABASE_URL="postgresql://user:pass@localhost:5432/db?schema=public"
-ENV DATABASE_URL=$DATABASE_URL
-RUN pnpm exec prisma generate
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm run build
 
@@ -32,7 +28,6 @@ RUN addgroup -g 996 docker || true
 RUN addgroup -a nextjs docker || true
 
 COPY --from=builder /app/public ./public
-COPY --chown=nextjs:nodejs prisma ./prisma
 
 USER nextjs
 
