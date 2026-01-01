@@ -28,6 +28,8 @@ RUN addgroup -g 996 docker || true
 RUN addgroup -a nextjs docker || true
 
 COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
