@@ -50,11 +50,11 @@ export default async function RootLayout({
           <div className="flex items-center gap-2">
             <div className="drawer sm:hidden">
               <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
-              <div className="drawer-content flex items-center gap-2">
-                <label htmlFor="nav-drawer" className="btn btn-ghost btn-circle">
+              <div className="drawer-content flex">
+                <label htmlFor="nav-drawer" className="btn btn-ghost btn-circle active:animate-ping">
                   <Menu size={24} />
                 </label>
-                <Link className="btn btn-ghost rounded-full text-xl" href="/">{dict["nav.home"]}</Link>
+                <Link className="btn btn-ghost rounded-full text-lg xs:text-2xl" href="/">{dict["nav.home"]}</Link>
               </div>
               <div className="drawer-side z-50">
                 <label htmlFor="nav-drawer" className="drawer-overlay"></label>
@@ -72,13 +72,13 @@ export default async function RootLayout({
 
           <div>
             <div className="flex items-center gap-2 drawer drawer-end">
-              <Link className="btn btn-ghost rounded-full text-xl" href="/login">
+              <Link className="btn btn-ghost rounded-full text-lg xs:text-2xl" href="/login">
                 {dict["action.login"]}
               </Link>
 
               <input id="settings-drawer" type="checkbox" className="drawer-toggle" />
               <div className="drawer-content flex items-center">
-                <label htmlFor="settings-drawer" className="btn btn-ghost btn-circle">
+                <label htmlFor="settings-drawer" className="btn btn-ghost btn-circle active:animate-spin">
                   <Settings size={24} />
                 </label>
               </div>

@@ -3,6 +3,10 @@
   themes: light, night --prefers-dark --default;
 }
 
+@theme {
+  --breakpoint-xs: 400px;
+}
+
 @keyframes fadeInScale {
   from {
     opacity: 0;

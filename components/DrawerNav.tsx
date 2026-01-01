@@ -11,17 +11,17 @@ export default function DrawerNav() {
   return (
     <ul className="menu m-6 p-3 grid gap-2 w-fit bg-base-200 text-base-content text-2xl rounded-4xl">
       <li>
-        <Link href="/" onClick={closeDrawer} className="rounded-full">
+        <Link href="/" onClick={closeDrawer} className="rounded-full w-fit">
           Home
         </Link>
       </li>
       <li>
-        <Link href="/dev" onClick={closeDrawer} className="rounded-full">
+        <Link href="/dev" onClick={closeDrawer} className="rounded-full w-fit">
           dev
         </Link>
       </li>
       <li>
-        <Link href="/projects" onClick={closeDrawer} className="rounded-full">
+        <Link href="/projects" onClick={closeDrawer} className="rounded-full w-fit">
           Projects
         </Link>
       </li>
@@ -29,7 +29,7 @@ export default function DrawerNav() {
         <a
           href="https://vert.romantcham.fr"
           onClick={closeDrawer}
-          className="rounded-full"
+          className="rounded-full w-fit"
         >
           Vert
         </a>
