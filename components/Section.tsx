@@ -12,7 +12,7 @@ export function Section({
   link?: string;
 }>) {
   return (
-    <section className={`p-6 flex flex-col space-y-4 bg-base-100 rounded-4xl animate-fade-in-scale ${className}`}>
+    <section className={`p-6 flex flex-col space-y-4 bg-base-100 rounded-4xl ${className}`}>
       { title && (
         link ? (
           <Link href={link} className="w-fit">

@@ -36,6 +36,8 @@
   "crackle2.whiten": "Whiten",
 
   "home.title": "Home",
+  "home.design_test.title": "Design test",
+  "home.design_test.text": "This is a test page to try some Tailwind/DaisyUI/typescript Design.",
   "home.section1.title": "What is this site's purpose",
   "home.section1.text": "Hello, I'm Roman and I created this website for my own use and as a portfolio piece.",
   "home.section2.title": "What does this site contain",

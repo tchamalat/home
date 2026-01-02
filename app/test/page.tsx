@@ -13,12 +13,44 @@ export default async function Home() {
 
   return (
     <Main title="Test">
+      <Section title="test 1" className="hover:animate-spin shadow-xl shadow-primary/10">
+        <p>hover:animate-spin<br />
+          shadow-xl<br />
+          shadow-primary/10</p>
+      </Section>
+      <Section title="test 2" className="bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg shadow-accent/40">
+        <p>bg-gradient-to-r<br />
+          from-primary<br />
+          via-secondary<br />
+          to-accent<br /><br />
+          text-white<br />
+          shadow-lg<br />
+          shadow-accent/40</p>
+      </Section>
+      <Section title="test 3 (home)" className="hover:-translate-y-2 transform transition-all duration-300 ease-in-out shadow-md shadow-secondary/20" link="/">
+        <p>hover:-translate-y-2<br />
+          transform<br />
+          transition-all<br />
+          duration-300<br />
+          ease-in-out<br /><br />
+          shadow-md<br />
+          shadow-secondary/20</p>
+      </Section>
+      <Section title="test 4" className="bg-gradient-to-b from-accent/10 to-transparent p-8 rounded-3xl shadow-sm shadow-accent/20">
+        <p>bg-gradient-to-b<br />
+          from-accent/10<br />
+          to-transparent<br />
+          p-8<br />
+          rounded-3xl<br />
+          shadow-sm<br />
+          shadow-accent/20</p>
+      </Section>
       <CrackleSection 
         dict={filterDictByPrefix(dict, "crackle.") as any}
       />
       <CrackleSection2 
         dict={filterDictByPrefix(dict, "crackle2.") as any}
       />
-    </Main>
+      </Main>
   );
 }

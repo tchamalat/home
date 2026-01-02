@@ -36,6 +36,8 @@
   "crackle2.whiten": "Éclaircir",
 
   "home.title": "Accueil",
+  "home.design_test.title": "Test de design",
+  "home.design_test.text": "Ceci est une page de test pour essayer du design avec Tailwind/DaisyUI/typescript.",
   "home.section1.title": "Quel est le but de ce site",
   "home.section1.text": "Bonjour, je suis Roman et j'ai créé ce site pour mon usage personnel et en tant que portfolio.",
   "home.section2.title": "Que contient ce site",

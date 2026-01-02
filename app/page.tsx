@@ -15,6 +15,11 @@ export default async function Home() {
 
   return (
     <Main title={dict["home.title"]}>
+      <Section title={dict["home.design_test.title"]} link="test">
+        <p>
+          {dict["home.design_test.text"]}
+        </p>
+      </Section>
       <Section title={dict["home.section1.title"]}>
         <p className="text-foreground"> 
           {dict["home.section1.text"]}
