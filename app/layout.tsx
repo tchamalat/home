@@ -12,6 +12,7 @@ import SessionProvider from "@/components/SessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import HeaderAuthButton from "@/components/HeaderAuthButton";
+import HeaderNav from "@/components/HeaderNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,15 +76,16 @@ export default async function RootLayout({
               </div>
             </div>
 
-            <nav className="hidden sm:flex gap-2 font-semibold">
-              <Link className="btn btn-ghost rounded-full text-xl" href="/">{dict["nav.home"]}</Link>
-              <Link className="btn btn-ghost rounded-full text-xl" href="/dev">{dict["nav.dev"]}</Link>
-              <Link className="btn btn-ghost rounded-full text-xl" href="/projects">{dict["nav.projects"]}</Link>
-              <a className="btn btn-ghost rounded-full text-xl" href="https://vert.romantcham.fr">{dict["nav.vert"]}</a>
-              {session && (
-                <Link className="btn btn-ghost rounded-full text-xl" href="/dashboard">{dict["nav.dashboard"]}</Link>
-              )}
-            </nav>
+            <HeaderNav 
+              labels={{
+                home: dict["nav.home"],
+                dev: dict["nav.dev"],
+                projects: dict["nav.projects"],
+                vert: dict["nav.vert"],
+                dashboard: dict["nav.dashboard"],
+              }}
+              showDashboard={Boolean(session)}
+            />
           </div>
 
           <div>

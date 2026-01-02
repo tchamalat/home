@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import NavLink from "./NavLink"
 
 type Props = {
   labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard", string>;
@@ -16,34 +16,35 @@ export default function DrawerNav({ labels, showDashboard }: Props) {
   return (
     <ul className="menu m-6 p-3 grid gap-2 w-fit bg-base-200 text-base-content text-2xl rounded-4xl">
       <li>
-        <Link href="/" onClick={closeDrawer} className="rounded-full w-fit">
+        <NavLink href="/" onClick={closeDrawer} className="rounded-full w-fit" exact>
           {labels.home}
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link href="/dev" onClick={closeDrawer} className="rounded-full w-fit">
+        <NavLink href="/dev" onClick={closeDrawer} className="rounded-full w-fit">
           {labels.dev}
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <Link href="/projects" onClick={closeDrawer} className="rounded-full w-fit">
+        <NavLink href="/projects" onClick={closeDrawer} className="rounded-full w-fit">
           {labels.projects}
-        </Link>
+        </NavLink>
       </li>
       <li>
-        <a
+        <NavLink
           href="https://vert.romantcham.fr"
           onClick={closeDrawer}
           className="rounded-full w-fit"
+          external
         >
           {labels.vert}
-        </a>
+        </NavLink>
       </li>
       {showDashboard && (
         <li>
-          <Link href="/dashboard" onClick={closeDrawer} className="rounded-full w-fit">
+          <NavLink href="/dashboard" onClick={closeDrawer} className="rounded-full w-fit">
             {labels.dashboard}
-          </Link>
+          </NavLink>
         </li>
       )}
     </ul>
