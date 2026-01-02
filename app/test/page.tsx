@@ -45,6 +45,18 @@ export default async function Home() {
           shadow-sm<br />
           shadow-accent/20</p>
       </Section>
+      <Section title="test 5" className="hover:scale-105 transform transition-transform duration-200 ease-in-out bg-base-300 p-4 rounded-2xl shadow-inner shadow-base-300/30">
+        <p>hover:scale-105<br />
+          transform<br />
+          transition-transform<br />
+          duration-200<br />
+          ease-in-out<br /><br />
+          bg-base-200<br />
+          p-4<br />
+          rounded-2xl<br />
+          shadow-inner<br />
+          shadow-base-300/30</p>
+      </Section>
       <CrackleSection 
         dict={filterDictByPrefix(dict, "crackle.") as any}
       />

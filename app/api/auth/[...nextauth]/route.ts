@@ -25,8 +25,6 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.image = user.image ?? undefined;
-        // Le flag isAdmin est calculé côté serveur à chaque génération du JWT
-        // Il n'est PAS stocké dans le token pour éviter toute manipulation
       }
       return token;
     },
