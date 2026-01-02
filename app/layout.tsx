@@ -47,6 +47,11 @@ export default async function RootLayout({
   const dict = getDictionary(locale);
   const session = await getServerSession(authOptions);
 
+  // Vérification admin côté serveur
+  const isAdmin = session?.user?.email && process.env.ADMIN_GMAIL
+    ? session.user.email.toLowerCase() === process.env.ADMIN_GMAIL.toLowerCase()
+    : false;
+
   return (
     <html lang={locale} data-theme="night" className="bg-fixed bg-[radial-gradient(circle_at_20%_25%,rgba(70,20,80,0.45),transparent_38%),radial-gradient(circle_at_80%_12%,rgba(255,190,120,0.2),transparent_26%),radial-gradient(circle_at_40%_70%,rgba(40,40,100,0.3),transparent_30%)] bg-base-300">
       <body className="min-h-screen p-6 flex flex-col bg-transparent">
@@ -70,8 +75,10 @@ export default async function RootLayout({
                     projects: dict["nav.projects"],
                     vert: dict["nav.vert"],
                     dashboard: dict["nav.dashboard"],
+                    admin: dict["nav.admin"],
                   }}
                   showDashboard={Boolean(session)}
+                  showAdmin={isAdmin}
                 />
               </div>
             </div>
@@ -83,8 +90,10 @@ export default async function RootLayout({
                 projects: dict["nav.projects"],
                 vert: dict["nav.vert"],
                 dashboard: dict["nav.dashboard"],
+                admin: dict["nav.admin"],
               }}
               showDashboard={Boolean(session)}
+              showAdmin={isAdmin}
             />
           </div>
 

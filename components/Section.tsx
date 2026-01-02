@@ -15,8 +15,8 @@ export function Section({
     <section className={`p-6 flex flex-col space-y-4 bg-base-100 rounded-4xl ${className}`}>
       { title && (
         link ? (
-          <Link href={link} className="w-fit">
-            <h2 className="btn bg-base-300 rounded-full text-2xl font-bold h-fit">
+          <Link href={link} className="rounded-full w-fit">
+            <h2 className="btn bg-base-300 py-1 px-3 rounded-full text-2xl font-bold h-fit">
               {title}
             </h2>
           </Link>

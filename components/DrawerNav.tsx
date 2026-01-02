@@ -3,11 +3,12 @@
 import NavLink from "./NavLink"
 
 type Props = {
-  labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard", string>;
+  labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard" | "admin", string>;
   showDashboard?: boolean;
+  showAdmin?: boolean;
 }
 
-export default function DrawerNav({ labels, showDashboard }: Props) {
+export default function DrawerNav({ labels, showDashboard, showAdmin }: Props) {
   const closeDrawer = () => {
     const checkbox = document.getElementById("nav-drawer") as HTMLInputElement | null
     if (checkbox) checkbox.checked = false
@@ -44,6 +45,13 @@ export default function DrawerNav({ labels, showDashboard }: Props) {
         <li>
           <NavLink href="/dashboard" onClick={closeDrawer} className="rounded-full w-fit">
             {labels.dashboard}
+          </NavLink>
+        </li>
+      )}
+      {showAdmin && (
+        <li>
+          <NavLink href="/admin" onClick={closeDrawer} className="rounded-full w-fit text-warning">
+            {labels.admin}
           </NavLink>
         </li>
       )}

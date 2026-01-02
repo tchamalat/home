@@ -3,11 +3,12 @@
 import NavLink from "./NavLink";
 
 type Props = {
-  labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard", string>;
+  labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard" | "admin", string>;
   showDashboard?: boolean;
+  showAdmin?: boolean;
 };
 
-export default function HeaderNav({ labels, showDashboard }: Props) {
+export default function HeaderNav({ labels, showDashboard, showAdmin }: Props) {
   return (
     <nav className="hidden sm:flex gap-2 font-semibold">
       <NavLink
@@ -46,6 +47,15 @@ export default function HeaderNav({ labels, showDashboard }: Props) {
           activeClassName="bg-primary/20 text-primary"
         >
           {labels.dashboard}
+        </NavLink>
+      )}
+      {showAdmin && (
+        <NavLink
+          href="/admin"
+          className="btn btn-ghost rounded-full text-xl text-warning"
+          activeClassName="bg-warning/20 text-warning"
+        >
+          {labels.admin}
         </NavLink>
       )}
     </nav>

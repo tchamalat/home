@@ -16,8 +16,8 @@ export async function requireAdmin(req: NextRequest) {
 
   if (session instanceof NextResponse) return session;
 
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const isAdmin = adminEmail && session.user?.email === adminEmail;
+  const adminGmail = process.env.ADMIN_GMAIL;
+  const isAdmin = adminGmail && session.user?.email === adminGmail;
 
   if (!isAdmin) {
     return NextResponse.json({ error: "Accès refusé - Admin uniquement" }, { status: 403 });

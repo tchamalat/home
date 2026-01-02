@@ -20,6 +20,7 @@
   "nav.projects": "Projets",
   "nav.vert": "Vert",
   "nav.dashboard": "Tableau de bord",
+  "nav.admin": "Admin",
 
   "action.login": "Connexion",
   "action.logout": "Déconnexion",

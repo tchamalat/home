@@ -35,7 +35,7 @@ services:
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_GMAIL: ${ADMIN_GMAIL}
     ports:
       - "3000:3000"
     networks:
@@ -58,7 +58,7 @@ cp .env.example .env
 
 Modifiez `.env` avec vos vraies valeurs :
 - `DATABASE_URL` : connexion PostgreSQL
-- `ADMIN_EMAIL` : votre email Google (sera automatiquement admin)
+- `ADMIN_GMAIL` : votre email Google (sera automatiquement admin)
 - `GOOGLE_CLIENT_ID` et `GOOGLE_CLIENT_SECRET` : OAuth Google
 
 ### 3. Générer Prisma Client et créer la base
@@ -81,7 +81,7 @@ Modifiez [route.ts](app/api/auth/[...nextauth]/route.ts) pour ajouter :
 ```typescript
 async signIn({ user, account }) {
   // Auto-set admin role on first login
-  if (user.email === process.env.ADMIN_EMAIL) {
+  if (user.email === process.env.ADMIN_GMAIL) {
     await prisma.user.update({
       where: { email: user.email },
       data: { role: "ADMIN" },
