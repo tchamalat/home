@@ -2,7 +2,12 @@
 
 import Link from "next/link"
 
-export default function DrawerNav() {
+type Props = {
+  labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard", string>;
+  showDashboard?: boolean;
+}
+
+export default function DrawerNav({ labels, showDashboard }: Props) {
   const closeDrawer = () => {
     const checkbox = document.getElementById("nav-drawer") as HTMLInputElement | null
     if (checkbox) checkbox.checked = false
@@ -12,17 +17,17 @@ export default function DrawerNav() {
     <ul className="menu m-6 p-3 grid gap-2 w-fit bg-base-200 text-base-content text-2xl rounded-4xl">
       <li>
         <Link href="/" onClick={closeDrawer} className="rounded-full w-fit">
-          Home
+          {labels.home}
         </Link>
       </li>
       <li>
         <Link href="/dev" onClick={closeDrawer} className="rounded-full w-fit">
-          dev
+          {labels.dev}
         </Link>
       </li>
       <li>
         <Link href="/projects" onClick={closeDrawer} className="rounded-full w-fit">
-          Projects
+          {labels.projects}
         </Link>
       </li>
       <li>
@@ -31,9 +36,16 @@ export default function DrawerNav() {
           onClick={closeDrawer}
           className="rounded-full w-fit"
         >
-          Vert
+          {labels.vert}
         </a>
       </li>
+      {showDashboard && (
+        <li>
+          <Link href="/dashboard" onClick={closeDrawer} className="rounded-full w-fit">
+            {labels.dashboard}
+          </Link>
+        </li>
+      )}
     </ul>
   )
 }

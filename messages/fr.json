@@ -13,12 +13,16 @@
   "meta.homeserver.title": "Projet de serveur domestique",
   "meta.homeserver.description": "Comment fonctionne mon serveur domestique.",
 
+  "footer.rights": "Tous droits réservés.",
+
   "nav.home": "Accueil",
   "nav.dev": "Dev",
   "nav.projects": "Projets",
   "nav.vert": "Vert",
+  "nav.dashboard": "Tableau de bord",
 
   "action.login": "Connexion",
+  "action.logout": "Déconnexion",
   "action.settings": "Paramètres",
 
   "crackle.title": "Test avec IA",
@@ -36,6 +40,9 @@
   "home.section1.text": "Bonjour, je suis Roman et j'ai créé ce site pour mon usage personnel et en tant que portfolio.",
   "home.section2.title": "Que contient ce site",
   "home.section2.text": "Ce site contient certains de mes projets personnels, un centre de développement, et la connexion permet à ma famille et mes amis d'utiliser certains outils utiles.",
+  "home.sectionDashboard.title": "Votre espace personnel",
+  "home.sectionDashboard.text": "Retrouvez vos outils et sections privées en un clic.",
+  "home.sectionDashboard.cta": "Ouvrir le tableau de bord",
 
   "dev.title": "Centre de Dev",
   "dev.section1.title": "Développons un peu.",

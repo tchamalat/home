@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
       '@': '../',
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.googleusercontent.com',
+      },
+    ],
+  },
   serverExternalPackages: [
     'dockerode',
     'docker-modem',

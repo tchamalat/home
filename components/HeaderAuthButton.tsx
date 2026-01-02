@@ -1,0 +1,49 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { signOut } from "next-auth/react";
+import type { Session } from "next-auth";
+
+type Props = {
+  session: Session | null;
+  labels: Record<"login" | "dashboard" | "logout", string>;
+};
+
+export default function HeaderAuthButton({ session, labels }: Props) {
+  const avatarSrc = session?.user?.image || "/google.svg";
+  const altText = session?.user?.name ? `${session.user.name} avatar` : labels.login;
+
+  if (!session) {
+    return (
+      <Link
+        href="/login"
+        className="btn btn-ghost rounded-full text-lg xs:text-2xl"
+        aria-label={labels.login}
+      >
+        {labels.login}
+      </Link>
+    );
+  }
+
+  return (
+    <div className="dropdown dropdown-end group">
+      <button
+        tabIndex={0}
+        className="btn btn-ghost btn-circle"
+        aria-label={labels.dashboard}
+      >
+        <div className="avatar">
+          <div className="w-10 rounded-full overflow-hidden ring-2 ring-transparent ring-offset-2 ring-offset-base-100 group-focus-within:ring-primary transition-all">
+            <Image src={avatarSrc} alt={altText} width={34} height={34} />
+          </div>
+        </div>
+      </button>
+      <ul className="menu menu-sm dropdown-content z-50 mt-6 p-2 shadow border-2 border-primary bg-base-100 rounded-box w-52 translate-x-15">
+        <li>
+          <button onClick={() => signOut({ callbackUrl: "/" })}>{labels.logout}</button>
+        </li>
+      </ul>
+    </div>
+  );
+}

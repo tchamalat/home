@@ -9,10 +9,10 @@ type Props = {
 
 export default function LoginForm({ dict }: Props) {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   return (
-    <div className="card w-full max-w-md bg-base-100 shadow-xl">
+    <div className="card w-full max-w-md bg-base-100 shadow-xl rounded-3xl">
       <div className="card-body">
         <h2 className="card-title flex justify-center text-2xl mb-6">{dict["login.title"]}</h2>
         

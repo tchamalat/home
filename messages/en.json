@@ -13,12 +13,16 @@
   "meta.homeserver.title": "Home server project",
   "meta.homeserver.description": "How does my home server work.",
 
+  "footer.rights": "All rights reserved.",
+
   "nav.home": "Home",
   "nav.dev": "Dev",
   "nav.projects": "Projects",
   "nav.vert": "Vert",
+  "nav.dashboard": "Dashboard",
 
   "action.login": "Login",
+  "action.logout": "Logout",
   "action.settings": "Settings",
 
   "crackle.title": "Test with AI",
@@ -36,6 +40,9 @@
   "home.section1.text": "Hello, I'm Roman and I created this website for my own use and as a portfolio piece.",
   "home.section2.title": "What does this site contain",
   "home.section2.text": "This site contains some of my personal projects, a dev center, and the login allows my family and friends to use some useful tools.",
+  "home.sectionDashboard.title": "Your personal dashboard",
+  "home.sectionDashboard.text": "Jump back into your private tools and spaces.",
+  "home.sectionDashboard.cta": "Open dashboard",
 
   "dev.title": "Dev center",
   "dev.section1.title": "Let's dev a little.",
