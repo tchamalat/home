@@ -56,12 +56,15 @@ export const authOptions: NextAuthOptions = {
 
         if (existingUser) {
           // User existe → on update lastLogin et l'image si elle a changé
+          const updateData: { lastLogin: Date; pp?: Uint8Array } = {
+            lastLogin: new Date(),
+          };
+          if (ppData) {
+            updateData.pp = ppData;
+          }
           await prisma.user.update({
             where: { mail: user.email },
-            data: {
-              lastLogin: new Date(),
-              ...(ppData && { pp: ppData }),
-            },
+            data: updateData,
           });
         } else {
           // Nouveau user → on le crée avec le nom splitté
