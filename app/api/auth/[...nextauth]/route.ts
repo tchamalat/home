@@ -42,13 +42,13 @@ export const authOptions: NextAuthOptions = {
         });
 
         // Télécharger l'image Google si disponible
-        let ppData: ReturnType<Uint8Array['slice']> | null = null;
+        let ppData: Buffer | null = null;
         if (user.image) {
           try {
             const imageRes = await fetch(user.image);
             if (imageRes.ok) {
               const arrayBuffer = await imageRes.arrayBuffer();
-              ppData = new Uint8Array(arrayBuffer).slice();
+              ppData = Buffer.from(arrayBuffer);
             }
           } catch (err) {
             console.error('Erreur téléchargement image Google:', err);
@@ -57,14 +57,17 @@ export const authOptions: NextAuthOptions = {
 
         if (existingUser) {
           // User existe → on update lastLogin et l'image si elle a changé
-          const updatePayload = ppData
-            ? { lastLogin: new Date(), pp: ppData }
-            : { lastLogin: new Date() };
-          
-          await prisma.user.update({
-            where: { mail: user.email },
-            data: updatePayload,
-          });
+          if (ppData) {
+            await prisma.user.update({
+              where: { mail: user.email },
+              data: { lastLogin: new Date(), pp: ppData },
+            });
+          } else {
+            await prisma.user.update({
+              where: { mail: user.email },
+              data: { lastLogin: new Date() },
+            });
+          }
         } else {
           // Nouveau user → on le crée avec le nom splitté
           const { firstname, lastname } = splitName(user.name);
