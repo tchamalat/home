@@ -14,6 +14,7 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 ENV DOCKER_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN npx prisma generate
 RUN pnpm run build
 
 FROM node:25-slim AS runner
