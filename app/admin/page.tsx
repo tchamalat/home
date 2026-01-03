@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Info, Users, FileText, Settings } from "lucide-react";
+import { Info, Users, FolderOpen, Settings } from "lucide-react";
 
 // Force la page à être dynamique (vérification à chaque requête)
 export const dynamic = 'force-dynamic';
@@ -80,33 +80,33 @@ export default async function AdminPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
           <div className="card-body">
             <h2 className="card-title">
               <Users className="w-6 h-6" />
               Utilisateurs
             </h2>
-            <p>Gérer les utilisateurs de l&apos;application</p>
+            <p>Gérer les utilisateurs et leurs groupes</p>
             <div className="card-actions justify-end">
-              <button className="btn btn-primary btn-sm">Gérer</button>
+              <Link href="/admin/users" className="btn btn-primary btn-sm">Gérer</Link>
             </div>
           </div>
         </div>
 
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
           <div className="card-body">
             <h2 className="card-title">
-              <FileText className="w-6 h-6" />
-              Logs
+              <FolderOpen className="w-6 h-6" />
+              Groupes
             </h2>
-            <p>Consulter les logs de l&apos;application</p>
+            <p>Créer et gérer les groupes</p>
             <div className="card-actions justify-end">
-              <button className="btn btn-primary btn-sm">Voir les logs</button>
+              <Link href="/admin/groups" className="btn btn-primary btn-sm">Gérer</Link>
             </div>
           </div>
         </div>
 
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
           <div className="card-body">
             <h2 className="card-title">
               <Settings className="w-6 h-6" />

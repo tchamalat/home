@@ -1,19 +1,64 @@
 services:
+  # ========================================
+  # BASE DE DONNÉES POSTGRESQL
+  # ========================================
+  db:
+    image: postgres:17-alpine          # Image officielle PostgreSQL (dernière version stable)
+    container_name: romantcham-db
+    restart: unless-stopped
+    environment:
+      # Ces variables créent automatiquement la BDD au premier lancement
+      POSTGRES_USER: ${POSTGRES_USER:-romantcham}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-romantcham_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-romantcham_db}
+    ports:
+      - "5432:5432"                     # Exposé pour accès local (dev, outils comme pgAdmin)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data   # Données persistantes
+    networks:
+      - app-network
+    healthcheck:
+      # Vérifie que PostgreSQL est prêt à accepter des connexions
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-romantcham} -d ${POSTGRES_DB:-romantcham_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ========================================
+  # APPLICATION NEXT.JS
+  # ========================================
   app:
     build: .
     container_name: romantcham-app
     restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
-      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-      ADMIN_GMAIL: ${ADMIN_GMAIL}
-      NODE_ENV: production
+      - NEXTAUTH_URL=https://romantcham.fr
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - ADMIN_GMAIL=${ADMIN_GMAIL}
+      - NODE_ENV=production
+      # URL de connexion à la BDD (utilise "db" car c'est le nom du service dans le réseau Docker)
+      - DATABASE_URL=postgresql://romantcham:${POSTGRES_PASSWORD:-romantcham_secret}@db:5432/romantcham_db?schema=public
     ports:
       - "3000:3000"
     networks:
       - app-network
     volumes:
-      # Pour le socket Docker (si vous voulez garder DockerLogs)
       - /var/run/docker.sock:/var/run/docker.sock:ro
+
+# ========================================
+# VOLUMES PERSISTANTS
+# ========================================
+volumes:
+  postgres_data:                        # Les données PostgreSQL survivent aux redémarrages
+
+# ========================================
+# RÉSEAUX
+# ========================================
+networks:
+  app-network:
+    driver: bridge

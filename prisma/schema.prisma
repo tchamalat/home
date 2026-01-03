@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // URL configurée dans prisma.config.ts (Prisma 7+)
+}
+
+// ========================================
+// TABLE USER
+// ========================================
+// Stocke les informations des utilisateurs du site
+// - plex : accès au serveur Plex
+// - picgrp : accès au groupe de photos (?)
+
+model User {
+  id            String    @id @default(cuid())  // Identifiant unique auto-généré
+  mail          String    @unique               // Email unique
+  firstname     String                          // Prénom
+  lastname      String                          // Nom de famille
+  pp            Bytes?                          // Photo de profil en binaire (optionnel)
+  plexright     Boolean    @default(false)      // Accès Plex
+  picgrpui      Boolean    @default(false)      // Affichage de l'ui picgrp
+  firstLogin    DateTime?  @default(now())      // Date de première connexion (null si jamais connecté)
+  lastLogin     DateTime?                       // Date de dernière connexion
+
+  // Relations
+  groups        Group[]                         // Groupes auxquels l'utilisateur appartient
+
+  @@map("users")
+}
+
+model Group {
+  id            String    @id @default(cuid())
+  name          String    @unique
+  description   String?                         // Description du groupe (optionnel)
+  pp            Bytes?                          // Photo du groupe
+  createdAt     DateTime  @default(now())       // Date de création (auto)
+
+  // Relations
+  members       User[]                          // Membres du groupe
+
+  @@map("groups")
+}
