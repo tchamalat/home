@@ -1,6 +1,7 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 // Fonction utilitaire pour vérifier si un email est admin
 // IMPORTANT: Cette vérification est faite UNIQUEMENT côté serveur
@@ -56,7 +57,7 @@ export const authOptions: NextAuthOptions = {
 
         if (existingUser) {
           // User existe → on update lastLogin et l'image si elle a changé
-          const updateData: { lastLogin: Date; pp?: Uint8Array } = {
+          const updateData: Prisma.UserUpdateInput = {
             lastLogin: new Date(),
           };
           if (ppData) {
