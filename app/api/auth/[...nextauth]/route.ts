@@ -41,13 +41,13 @@ export const authOptions: NextAuthOptions = {
         });
 
         // Télécharger l'image Google si disponible
-        let ppBuffer: Buffer | null = null;
+        let ppData: Uint8Array | null = null;
         if (user.image) {
           try {
             const imageRes = await fetch(user.image);
             if (imageRes.ok) {
               const arrayBuffer = await imageRes.arrayBuffer();
-              ppBuffer = Buffer.from(arrayBuffer);
+              ppData = new Uint8Array(arrayBuffer);
             }
           } catch (err) {
             console.error('Erreur téléchargement image Google:', err);
@@ -60,7 +60,7 @@ export const authOptions: NextAuthOptions = {
             where: { mail: user.email },
             data: {
               lastLogin: new Date(),
-              ...(ppBuffer && { pp: ppBuffer }),
+              ...(ppData && { pp: ppData }),
             },
           });
         } else {
@@ -71,7 +71,7 @@ export const authOptions: NextAuthOptions = {
               mail: user.email,
               firstname,
               lastname,
-              pp: ppBuffer,
+              pp: ppData,
               firstLogin: new Date(),
               lastLogin: new Date(),
             },
