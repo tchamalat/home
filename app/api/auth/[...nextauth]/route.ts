@@ -1,7 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 
 // Fonction utilitaire pour vérifier si un email est admin
 // IMPORTANT: Cette vérification est faite UNIQUEMENT côté serveur
