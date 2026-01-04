@@ -41,13 +41,15 @@ export const authOptions: NextAuthOptions = {
         });
 
         // Télécharger l'image Google si disponible
-        let ppData: Buffer | null = null;
+        // Note: On utilise .slice() car Prisma Bytes = ReturnType<Uint8Array['slice']>
+        // Cela garantit le type Uint8Array<ArrayBuffer> attendu par Prisma 7
+        let ppData: ReturnType<Uint8Array['slice']> | null = null;
         if (user.image) {
           try {
             const imageRes = await fetch(user.image);
             if (imageRes.ok) {
               const arrayBuffer = await imageRes.arrayBuffer();
-              ppData = Buffer.from(arrayBuffer);
+              ppData = new Uint8Array(arrayBuffer).slice();
             }
           } catch (err) {
             console.error('Erreur téléchargement image Google:', err);
