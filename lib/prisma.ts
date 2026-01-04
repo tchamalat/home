@@ -25,9 +25,30 @@ function createPrismaClient(): PrismaClient {
   return new PrismaClient({ adapter })
 }
 
-export const prisma = globalForPrisma.prisma ?? createPrismaClient()
+// Pendant le build Docker, on ne crée pas le client (pas de DB disponible)
+// Le client sera créé au runtime quand DATABASE_URL sera disponible
+function getPrismaClient(): PrismaClient {
+  if (process.env.DOCKER_BUILD === 'true') {
+    // Retourne un proxy qui lance une erreur si utilisé pendant le build
+    // En pratique, les routes API ne sont pas appelées pendant le build
+    return new Proxy({} as PrismaClient, {
+      get() {
+        throw new Error('Prisma client cannot be used during Docker build')
+      }
+    })
+  }
+  
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createPrismaClient()
+  }
+  return globalForPrisma.prisma
+}
+
+export const prisma = getPrismaClient()
 
 // En dev, on stocke le client dans une variable globale pour survivre au hot-reload
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (process.env.NODE_ENV !== 'production' && process.env.DOCKER_BUILD !== 'true') {
+  globalForPrisma.prisma = prisma
+}
 
 export default prisma
