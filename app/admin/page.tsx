@@ -64,9 +64,6 @@ export default async function AdminPage() {
                 <p className="text-gray-500">{session.user?.email}</p>
               </div>
             </div>
-            <Link href="/dashboard" className="btn btn-outline">
-              Retour au Dashboard
-            </Link>
           </div>
         </div>
       </div>

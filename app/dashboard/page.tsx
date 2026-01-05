@@ -46,12 +46,6 @@ export default function DashboardPage() {
                 <p className="text-gray-500">{session.user?.email}</p>
               </div>
             </div>
-            <button 
-              onClick={() => signOut({ callbackUrl: "/" })}
-              className="btn btn-outline btn-error"
-            >
-              Déconnexion
-            </button>
           </div>
         </div>
       </div>
