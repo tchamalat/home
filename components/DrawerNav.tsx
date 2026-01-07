@@ -3,7 +3,7 @@
 import NavLink from "./NavLink"
 
 type Props = {
-  labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard" | "admin", string>;
+  labels: Record<"home" | "projects" | "vert" | "dashboard" | "admin", string>;
   showDashboard?: boolean;
   showAdmin?: boolean;
 }
@@ -19,11 +19,6 @@ export default function DrawerNav({ labels, showDashboard, showAdmin }: Props) {
       <li>
         <NavLink href="/" onClick={closeDrawer} className="rounded-full w-fit" exact>
           {labels.home}
-        </NavLink>
-      </li>
-      <li>
-        <NavLink href="/dev" onClick={closeDrawer} className="rounded-full w-fit">
-          {labels.dev}
         </NavLink>
       </li>
       <li>

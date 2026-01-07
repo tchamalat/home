@@ -1,7 +1,7 @@
 import Main from "@/components/Main";
 import { Section } from "@/components/Section";
-import { CrackleSection } from "@/components/CrackleSection";
-import { CrackleSection2 } from "@/components/CrackleSection2";
+import { CrackleSection } from "@/components/test/CrackleSection";
+import { CrackleSection2 } from "@/components/test/CrackleSection2";
 import { cookies } from "next/headers";
 import { defaultLocale, getDictionary, isLocale, Locale, filterDictByPrefix } from "@/lib/i18n";
 

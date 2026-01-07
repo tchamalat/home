@@ -1,54 +1,37 @@
-"use client";
-
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { getServerSession } from "next-auth";
+import { authOptions, isAdminEmail } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
+import Main from "@/components/Main";
+import { Section } from "@/components/Section";
 
 export const dynamic = 'force-dynamic';
 
-export default function DashboardPage() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+export default async function DashboardPage() {
+  const session = await getServerSession(authOptions);
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
-
-  if (status === "loading") {
-    return (
-      <main className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
-      </main>
-    );
-  }
-
-  if (!session) {
-    return null;
+  // Vérification 1: Utilisateur authentifié
+  if (!session?.user) {
+    redirect("/login");
   }
 
   return (
-    <main className="flex flex-col gap-6">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {session.user?.image && (
-                <img 
-                  src={session.user.image} 
-                  alt={session.user.name || "User"} 
-                  className="w-16 h-16 rounded-full"
-                />
-              )}
-              <div>
-                <h1 className="text-3xl font-bold">Bienvenue, {session.user?.name}</h1>
-                <p className="text-gray-500">{session.user?.email}</p>
-              </div>
-            </div>
+    <Main title="Dashboard">
+      <Section className="flex">
+        <div className="flex items-center gap-4">
+          {session.user?.image && (
+            <img 
+              src={session.user.image} 
+              alt={session.user.name || "User"} 
+              className="w-16 h-16 rounded-full"
+            />
+          )}
+          <div>
+            <h1 className="text-3xl font-bold">Bienvenue, {session.user?.name}</h1>
+            <p className="text-gray-500">{session.user?.email}</p>
           </div>
         </div>
-      </div>
+      </Section>
+
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="card bg-base-100 shadow-xl">
@@ -81,6 +64,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-    </main>
+    </Main>
   );
 }

@@ -1,22 +1,13 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions, isAdminEmail } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Info, Users, FolderOpen, Settings } from "lucide-react";
+import { Section } from "@/components/Section";
+import Main from "@/components/Main";
 
 // Force la page à être dynamique (vérification à chaque requête)
 export const dynamic = 'force-dynamic';
-
-// Fonction de vérification admin côté serveur (duplicata intentionnel pour sécurité)
-function isAdminEmail(email: string | null | undefined): boolean {
-  if (!email) return false;
-  const adminGmail = process.env.ADMIN_GMAIL;
-  if (!adminGmail) {
-    console.warn("[ADMIN] ADMIN_GMAIL non défini dans les variables d'environnement");
-    return false;
-  }
-  return email.toLowerCase() === adminGmail.toLowerCase();
-}
 
 /**
  * Page Admin - Accessible uniquement si l'email de l'utilisateur correspond à ADMIN_GMAIL
@@ -40,33 +31,52 @@ export default async function AdminPage() {
   const isAdmin = isAdminEmail(session.user.email);
   
   if (!isAdmin) {
-    redirect("/");
+    redirect("/login");
+  }
+
+  // Statistiques système
+  const { prisma } = await import("@/lib/prisma");
+  // Nombre total d'utilisateurs
+  const userCount = await prisma.user.count();
+
+  // Nombre de sessions actives (utilisateurs connectés dans les 30 dernières minutes)
+  const THIRTY_MINUTES = 1000 * 60 * 30;
+  const since = new Date(Date.now() - THIRTY_MINUTES);
+  const activeSessions = await prisma.user.count({
+    where: {
+      lastLogin: { gte: since },
+    },
+  });
+
+  // Uptime du serveur Node.js
+  let uptime = "--";
+  if (typeof process !== "undefined" && process.uptime) {
+    const totalSeconds = Math.floor(process.uptime());
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    uptime = `${hours}h ${minutes}m ${seconds}s`;
   }
 
   return (
-    <main className="flex flex-col gap-6">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              {session.user?.image && (
-                <img 
-                  src={session.user.image} 
-                  alt={session.user.name || "Admin"} 
-                  className="w-16 h-16 rounded-full ring-4 ring-primary"
-                />
-              )}
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-3xl font-bold">Panel Admin</h1>
-                  <span className="badge badge-primary badge-lg">Admin</span>
-                </div>
-                <p className="text-gray-500">{session.user?.email}</p>
-              </div>
+    <Main title="Panel admin">
+      <Section className="flex">
+        <div className="flex items-center gap-4">
+          {session.user?.image && (
+            <img 
+              src={session.user.image} 
+              alt={session.user.name || "Admin"} 
+              className="w-16 h-16 rounded-full ring-4 ring-primary"
+            />
+          )}
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="badge badge-primary badge-lg">Admin</span>
             </div>
+            <p className="text-gray-500">{session.user?.email}</p>
           </div>
         </div>
-      </div>
+      </Section>
 
       <div className="alert alert-info">
         <Info className="w-6 h-6 shrink-0" />
@@ -77,44 +87,36 @@ export default async function AdminPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-          <div className="card-body">
-            <h2 className="card-title">
-              <Users className="w-6 h-6" />
-              Utilisateurs
-            </h2>
-            <p>Gérer les utilisateurs et leurs groupes</p>
-            <div className="card-actions justify-end">
-              <Link href="/admin/users" className="btn btn-primary btn-sm">Gérer</Link>
-            </div>
+        <Section>
+          <h2 className="card-title">
+            <Users className="w-6 h-6" />
+            Utilisateurs
+          </h2>
+          <p>Gérer les utilisateurs et leurs groupes</p>
+          <div className="card-actions justify-end">
+            <Link href="/admin/users" className="btn btn-primary btn-sm rounded-full">Gérer</Link>
           </div>
-        </div>
-
-        <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-          <div className="card-body">
-            <h2 className="card-title">
-              <FolderOpen className="w-6 h-6" />
-              Groupes
-            </h2>
-            <p>Créer et gérer les groupes</p>
-            <div className="card-actions justify-end">
-              <Link href="/admin/groups" className="btn btn-primary btn-sm">Gérer</Link>
-            </div>
+        </Section>
+        <Section>
+          <h2 className="card-title">
+            <FolderOpen className="w-6 h-6" />
+            Groupes
+          </h2>
+          <p>Créer et gérer les groupes</p>
+          <div className="card-actions justify-end">
+            <Link href="/admin/groups" className="btn btn-primary btn-sm rounded-full">Gérer</Link>
           </div>
-        </div>
-
-        <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-          <div className="card-body">
-            <h2 className="card-title">
-              <Settings className="w-6 h-6" />
-              Configuration
-            </h2>
-            <p>Paramètres de l&apos;application</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary btn-sm">Configurer</button>
-            </div>
+        </Section>
+        <Section>
+          <h2 className="card-title">
+            <Settings className="w-6 h-6" />
+            Dev
+          </h2>
+          <p>Paramètres de développement</p>
+          <div className="card-actions justify-end">
+            <Link href="/admin/dev" className="btn btn-primary btn-sm rounded-full">Configurer</Link>
           </div>
-        </div>
+        </Section>
       </div>
 
       <div className="card bg-base-100 shadow-xl">
@@ -123,24 +125,21 @@ export default async function AdminPage() {
           <div className="stats stats-vertical lg:stats-horizontal shadow">
             <div className="stat">
               <div className="stat-title">Utilisateurs</div>
-              <div className="stat-value">--</div>
+              <div className="stat-value">{userCount}</div>
               <div className="stat-desc">Total enregistrés</div>
             </div>
-            
             <div className="stat">
-              <div className="stat-title">Sessions actives</div>
-              <div className="stat-value">--</div>
-              <div className="stat-desc">En ce moment</div>
+              <div className="stat-title">Connections dans les 30 dernières minutes</div>
+              <div className="stat-value">{activeSessions}</div>
             </div>
-            
             <div className="stat">
               <div className="stat-title">Uptime</div>
-              <div className="stat-value">--</div>
+              <div className="stat-value">{uptime}</div>
               <div className="stat-desc">Depuis le dernier redémarrage</div>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </Main>
   );
 }

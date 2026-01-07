@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 // Fonction utilitaire pour vérifier si un email est admin
 // IMPORTANT: Cette vérification est faite UNIQUEMENT côté serveur
-function isAdminEmail(email: string | null | undefined): boolean {
+export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false;
   const adminGmail = process.env.ADMIN_GMAIL;
   if (!adminGmail) return false;

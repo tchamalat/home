@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
 import { cookies } from "next/headers";
 import { defaultLocale, getDictionary, isLocale, Locale } from "@/lib/i18n";
 import { Menu, Settings } from 'lucide-react';
@@ -13,6 +12,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import HeaderAuthButton from "@/components/HeaderAuthButton";
 import HeaderNav from "@/components/HeaderNav";
+import NavLink from "@/components/NavLink"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,7 +53,7 @@ export default async function RootLayout({
     : false;
 
   return (
-    <html lang={locale} data-theme="night" className="bg-fixed bg-[radial-gradient(circle_at_20%_25%,rgba(70,20,80,0.45),transparent_38%),radial-gradient(circle_at_80%_12%,rgba(255,190,120,0.2),transparent_26%),radial-gradient(circle_at_40%_70%,rgba(40,40,100,0.3),transparent_30%)] bg-base-300">
+    <html lang={locale} data-theme="night" className="bg-fixed bg-[radial-gradient(circle_at_20%_25%,rgba(70,20,80,0.45),transparent_38%),radial-gradient(circle_at_80%_12%,rgba(255,190,120,0.2),transparent_26%),radial-gradient(circle_at_40%_70%,rgba(40,40,100,0.3),transparent_30%)] bg-emerald-700/50">
       <body className="min-h-screen p-6 flex flex-col bg-transparent">
         <SplashScreen welcomeText={dict["splash.welcome"]} />
         <header className="flex justify-between bg-base-100 mb-6 rounded-full px-3 py-3 shadow-sm w-full">
@@ -64,7 +64,7 @@ export default async function RootLayout({
                 <label htmlFor="nav-drawer" className="btn btn-ghost btn-circle active:animate-ping">
                   <Menu size={24} />
                 </label>
-                <Link className="btn btn-ghost rounded-full text-lg xs:text-2xl" href="/">{dict["nav.home"]}</Link>
+                <NavLink href="/" className="text-2xl px-3 pt-1 rounded-full w-fit">{dict["nav.home"]}</NavLink>
               </div>
               <div className="drawer-side z-50">
                 <label htmlFor="nav-drawer" className="drawer-overlay"></label>

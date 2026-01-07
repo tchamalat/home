@@ -12,3 +12,5 @@ this project uses:
 - prisma for the database
 
 It is hosted by myself in a docker enviromnent
+
+pnpm dev

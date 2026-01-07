@@ -3,7 +3,7 @@
 import NavLink from "./NavLink";
 
 type Props = {
-  labels: Record<"home" | "dev" | "projects" | "vert" | "dashboard" | "admin", string>;
+  labels: Record<"home" | "projects" | "vert" | "dashboard" | "admin", string>;
   showDashboard?: boolean;
   showAdmin?: boolean;
 };
@@ -18,13 +18,6 @@ export default function HeaderNav({ labels, showDashboard, showAdmin }: Props) {
         exact
       >
         {labels.home}
-      </NavLink>
-      <NavLink
-        href="/dev"
-        className="btn btn-ghost rounded-full text-xl"
-        activeClassName="bg-primary/20 text-primary"
-      >
-        {labels.dev}
       </NavLink>
       <NavLink
         href="/projects"
