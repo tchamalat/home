@@ -85,7 +85,6 @@ export default async function RootLayout({
             <HeaderNav 
               labels={{
                 home: dict["nav.home"],
-                dev: dict["nav.dev"],
                 projects: dict["nav.projects"],
                 vert: dict["nav.vert"],
                 dashboard: dict["nav.dashboard"],
