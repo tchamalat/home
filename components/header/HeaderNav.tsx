@@ -8,47 +8,48 @@ type Props = {
   showAdmin?: boolean;
 };
 
-export default function HeaderNav({ labels, showDashboard, showAdmin }: Props) {
+export default function HeaderNav({ labels, showDashboard = false, showAdmin = false }: Props) {
+  
   return (
-    <nav className="hidden sm:flex gap-2 font-semibold">
+    <nav className="hidden smmd:flex gap-2 font-semibold">
       <NavLink
         href="/"
-        className="btn btn-ghost rounded-full text-xl"
+        className="rounded-full"
         activeClassName="bg-primary/20 text-primary"
         exact
       >
-        {labels.home}
+        <span>{labels.home}</span>
       </NavLink>
       <NavLink
         href="/projects"
-        className="btn btn-ghost rounded-full text-xl"
+        className="rounded-full"
         activeClassName="bg-primary/20 text-primary"
       >
-        {labels.projects}
+        <span>{labels.projects}</span>
       </NavLink>
       <NavLink
         href="https://vert.romantcham.fr"
-        className="btn btn-ghost rounded-full text-xl"
+        className="rounded-full"
         external
       >
-        {labels.vert}
+        <span>{labels.vert}</span>
       </NavLink>
       {showDashboard && (
         <NavLink
           href="/dashboard"
-          className="btn btn-ghost rounded-full text-xl"
+          className="rounded-full"
           activeClassName="bg-primary/20 text-primary"
         >
-          {labels.dashboard}
+          <span>{labels.dashboard}</span>
         </NavLink>
       )}
       {showAdmin && (
         <NavLink
           href="/admin"
-          className="btn btn-ghost rounded-full text-xl text-warning"
+          className="rounded-full text-warning"
           activeClassName="bg-warning/20 text-warning"
         >
-          {labels.admin}
+          <span>{labels.admin}</span>
         </NavLink>
       )}
     </nav>

@@ -29,14 +29,14 @@ export default function NavLink({
 
   if (external) {
     return (
-      <a href={href} className={combinedClassName} onClick={onClick}>
+      <a href={href} className={`btn btn-ghost text-xl ${combinedClassName}`} onClick={onClick}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link href={href} className={combinedClassName} onClick={onClick}>
+    <Link href={href} className={`btn btn-ghost text-xl ${combinedClassName}`} onClick={onClick}>
       {children}
     </Link>
   );

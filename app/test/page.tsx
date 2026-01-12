@@ -4,6 +4,7 @@ import { CrackleSection } from "@/components/test/CrackleSection";
 import { CrackleSection2 } from "@/components/test/CrackleSection2";
 import { cookies } from "next/headers";
 import { defaultLocale, getDictionary, isLocale, Locale, filterDictByPrefix } from "@/lib/i18n";
+import { Button } from "@/components/Button";
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -13,13 +14,13 @@ export default async function Home() {
 
   return (
     <Main title="Test">
-      <Section title="test 1" className="hover:animate-spin shadow-xl shadow-primary/10">
-        <p>hover:animate-spin<br />
-          shadow-xl<br />
+      <Button title="coucou" particleEffect/>
+      <Section title="test 1" className="shadow-xl shadow-primary/10">
+        <p>shadow-xl<br />
           shadow-primary/10</p>
       </Section>
-      <Section title="test 2" className="bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg shadow-accent/40">
-        <p>bg-gradient-to-r<br />
+      <Section title="test 2" className="bg-linear-to-r from-primary via-secondary to-accent text-white shadow-lg shadow-accent/40">
+        <p>bg-linear-to-r<br />
           from-primary<br />
           via-secondary<br />
           to-accent<br /><br />
@@ -36,7 +37,7 @@ export default async function Home() {
           shadow-md<br />
           shadow-secondary/20</p>
       </Section>
-      <Section title="test 4" className="bg-gradient-to-b from-accent/10 to-transparent p-8 rounded-3xl shadow-sm shadow-accent/20">
+      <Section title="test 4" className="bg-linear-to-br from-accent/30 to-transparent p-8 rounded-3xl shadow-md shadow-accent/20">
         <p>bg-gradient-to-b<br />
           from-accent/10<br />
           to-transparent<br />
@@ -56,6 +57,7 @@ export default async function Home() {
           rounded-2xl<br />
           shadow-inner<br />
           shadow-base-300/30</p>
+          <Button title="click me" link="/" particleEffect={true}  />
       </Section>
       <CrackleSection 
         dict={filterDictByPrefix(dict, "crackle.") as any}

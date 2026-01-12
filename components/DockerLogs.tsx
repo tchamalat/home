@@ -71,7 +71,7 @@ export default function DockerLogs({ dict }: Props) {
         </div>
       </div>
 
-      <div className="mockup-code bg-base-200 overflow-y-auto">
+      <div className="mockup-code bg-base-200/90 border border-primary/10 overflow-y-auto">
         {logs.length === 0 ? (
           <pre data-prefix="$" className="text-base-content/50">
             <code>{dict["dockerlogs.waiting"]}</code>

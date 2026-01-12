@@ -44,7 +44,7 @@ export default function HeaderAuthButton({ session, labels }: Props) {
           </div>
         </div>
       </button>
-      <ul className="menu menu-sm dropdown-content z-50 mt-6 p-2 shadow border-2 border-primary bg-base-100 rounded-box w-52 translate-x-15">
+      <ul className="menu menu-sm dropdown-content z-50 mt-6 p-2 shadow border-2 border-primary/40 bg-base-100/95 rounded-box w-52 translate-x-15">
         <li>
           <button onClick={() => signOut({ callbackUrl: "/" })}>{labels.logout}</button>
         </li>

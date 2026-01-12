@@ -180,7 +180,7 @@ export function CrackleSection({ dict }: Props) {
           prevPointRef.current = null;
         }}
         onPointerMove={handlePointerMove}
-        className="relative isolate overflow-hidden rounded-3xl border border-orange-900/30 from-neutral-950 via-neutral-900 to-neutral-950 p-8 shadow-inner"
+        className="relative isolate overflow-hidden rounded-3xl border border-primary/20 from-base-300 via-base-100 to-base-200 p-8 shadow-inner bg-base-100/80"
       >
         <div className="relative z-10 flex flex-col gap-3">
           <p className="max-w-2xl text-base">
@@ -196,7 +196,7 @@ export function CrackleSection({ dict }: Props) {
             visible ? "opacity-100" : "opacity-0"
           }`}
         />
-        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,120,60,0.35),transparent_38%),radial-gradient(circle_at_80%_12%,rgba(255,190,120,0.2),transparent_26%),radial-gradient(circle_at_40%_80%,rgba(255,80,40,0.2),transparent_32%)] mix-blend-screen" />
+        <div className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-primary/20 via-base-300/80 to-base-100/60 mix-blend-screen" />
       </div>
     </Section>
   );

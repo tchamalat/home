@@ -1,6 +1,8 @@
 "use client"
 
-import NavLink from "./NavLink"
+import { useEffect, useRef } from "react"
+import gsap from "gsap"
+import NavLink from "@/components/header/NavLink"
 
 type Props = {
   labels: Record<"home" | "projects" | "vert" | "dashboard" | "admin", string>;
@@ -8,14 +10,30 @@ type Props = {
   showAdmin?: boolean;
 }
 
-export default function DrawerNav({ labels, showDashboard, showAdmin }: Props) {
+export default function DrawerNav({ labels, showDashboard = false, showAdmin = false }: Props) {
+  const drawerRef = useRef(null);
   const closeDrawer = () => {
     const checkbox = document.getElementById("nav-drawer") as HTMLInputElement | null
     if (checkbox) checkbox.checked = false
   }
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const clamp = (v: number, min: number, max: number): number => Math.max(min, Math.min(max, v));
+      const progress = clamp(scrollY / 80, 0, 1);
+
+      gsap.to(drawerRef.current, {
+        marginTop: `${16 - 8 * progress}px`,
+        marginLeft: `${16 - 8 * progress}px`,
+      });
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <ul className="menu m-6 p-3 grid gap-2 w-fit bg-base-200 text-base-content text-2xl rounded-4xl">
+    <ul ref={drawerRef} className="menu m-4 p-3 grid gap-2 w-fit bg-base-200/90 text-base-content text-2xl rounded-3xl shadow border border-primary/10">
       <li>
         <NavLink href="/" onClick={closeDrawer} className="rounded-full w-fit" exact>
           {labels.home}
