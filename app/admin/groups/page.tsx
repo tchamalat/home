@@ -240,7 +240,7 @@ export default function AdminGroupsPage() {
                     <div className="w-14 rounded-xl">
                       {group.avatarPath ? (
                         <img 
-                          src={`/api/groups/${group.id}/avatar`}
+                          src={`/api/groups/${group.id}/avatar?${Date.now()}`}
                           alt=""
                           onError={e => {
                             const target = e.target as HTMLImageElement;
@@ -340,13 +340,28 @@ export default function AdminGroupsPage() {
                   <span className="label-text">Photo du groupe (optionnel)</span>
                 </label>
                 <div className="flex items-center gap-4">
-                  {formImage ? (
-                    <div className="relative">
-                      <img 
+                  <div className="relative">
+                    {formImage ? (
+                      <img
                         src={URL.createObjectURL(formImage)}
                         alt="Preview"
                         className="w-16 h-16 rounded-xl object-cover"
                       />
+                    ) : editingGroup && editingGroup.avatarPath ? (
+                      <img
+                        src={`/api/groups/${editingGroup.id}/avatar?${Date.now()}`}
+                        alt="Avatar actuel"
+                        className="w-16 h-16 rounded-xl object-cover"
+                      />
+                    ) : (
+                      <div 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-16 h-16 rounded-xl border-2 border-dashed border-base-300 flex items-center justify-center cursor-pointer hover:border-primary transition-colors"
+                      >
+                        <ImageIcon className="w-6 h-6 opacity-50" />
+                      </div>
+                    )}
+                    {(formImage || (editingGroup && editingGroup.avatarPath)) && (
                       <button
                         type="button"
                         onClick={() => {
@@ -357,15 +372,8 @@ export default function AdminGroupsPage() {
                       >
                         <X className="w-3 h-3" />
                       </button>
-                    </div>
-                  ) : (
-                    <div 
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-16 h-16 rounded-xl border-2 border-dashed border-base-300 flex items-center justify-center cursor-pointer hover:border-primary transition-colors"
-                    >
-                      <ImageIcon className="w-6 h-6 opacity-50" />
-                    </div>
-                  )}
+                    )}
+                  </div>
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -460,13 +468,28 @@ export default function AdminGroupsPage() {
                   <span className="label-text">Photo du groupe</span>
                 </label>
                 <div className="flex items-center gap-4">
-                  {formImage ? (
-                    <div className="relative">
-                      <img 
-                        src={`data:image/png;base64,${formImage}`}
+                  <div className="relative">
+                    {formImage ? (
+                      <img
+                        src={URL.createObjectURL(formImage)}
                         alt="Preview"
                         className="w-16 h-16 rounded-xl object-cover"
                       />
+                    ) : editingGroup && editingGroup.avatarPath ? (
+                      <img
+                        src={`/api/groups/${editingGroup.id}/avatar?${Date.now()}`}
+                        alt="Avatar actuel"
+                        className="w-16 h-16 rounded-xl object-cover"
+                      />
+                    ) : (
+                      <div 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="w-16 h-16 rounded-xl border-2 border-dashed border-base-300 flex items-center justify-center cursor-pointer hover:border-primary transition-colors"
+                      >
+                        <ImageIcon className="w-6 h-6 opacity-50" />
+                      </div>
+                    )}
+                    {(formImage || (editingGroup && editingGroup.avatarPath)) && (
                       <button
                         type="button"
                         onClick={() => {
@@ -477,15 +500,8 @@ export default function AdminGroupsPage() {
                       >
                         <X className="w-3 h-3" />
                       </button>
-                    </div>
-                  ) : (
-                    <div 
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-16 h-16 rounded-xl border-2 border-dashed border-base-300 flex items-center justify-center cursor-pointer hover:border-primary transition-colors"
-                    >
-                      <ImageIcon className="w-6 h-6 opacity-50" />
-                    </div>
-                  )}
+                    )}
+                  </div>
                   <input
                     ref={fileInputRef}
                     type="file"

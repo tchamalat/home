@@ -79,7 +79,8 @@ export async function PUT(request: NextRequest, { params }: Params) {
     if (body instanceof FormData) {
       name = body.get('name')
       description = body.get('description')
-      file = body.get('file') as File | null
+      // Accepte 'avatar' (comme à la création) ou 'file'
+      file = (body.get('avatar') || body.get('file')) as File | null
     } else {
       name = body.name
       description = body.description
@@ -105,33 +106,41 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
     // Gestion de l'image de groupe
     let avatarPath = existing.avatarPath
-    if (file && file instanceof File && file.type === 'image/jpeg') {
+    if (file && file instanceof File) {
       const fs = require('fs');
       const path = require('path');
       const dir = path.join(process.cwd(), 'media', 'image', 'grpp');
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-      // Historique : renomme l'ancienne image si elle existe
+      let fileName, filePath;
       if (avatarPath) {
-        const oldPath = path.join(process.cwd(), avatarPath);
-        if (fs.existsSync(oldPath)) {
+        // On conserve le nom du fichier existant
+        fileName = path.basename(avatarPath);
+        filePath = path.join(dir, fileName);
+        // Historique : sauvegarde l'ancienne image
+        if (fs.existsSync(filePath)) {
           let i = 1, newOldPath;
+          const { name, ext } = path.parse(filePath);
           do {
-            newOldPath = oldPath.replace(/\.jpg$/, `_old_${i}.jpg`);
+            newOldPath = path.join(dir, `${name}_old_${i}${ext}`);
             i++;
           } while (fs.existsSync(newOldPath));
-          fs.renameSync(oldPath, newOldPath);
+          fs.renameSync(filePath, newOldPath);
         }
+      } else {
+        // Première image : nom unique
+        const ext = path.extname(file.name) || '.jpg';
+        let tries = 0;
+        do {
+          const uniqueId = Math.floor(10000000 + Math.random() * 90000000).toString();
+          fileName = `${uniqueId}${ext}`;
+          filePath = path.join(dir, fileName);
+          tries++;
+        } while (fs.existsSync(filePath) && tries < 10);
+        if (tries === 10) throw new Error('Impossible de générer un nom de fichier unique');
+        avatarPath = `media/image/grpp/${fileName}`;
       }
-      // Génère un nom unique
-      let fileName, filePath;
-      do {
-        const uniqueId = Math.floor(10000000 + Math.random() * 90000000).toString();
-        fileName = `${uniqueId}.jpg`;
-        filePath = path.join(dir, fileName);
-      } while (fs.existsSync(filePath));
       const arrayBuffer = await file.arrayBuffer();
       fs.writeFileSync(filePath, Buffer.from(arrayBuffer));
-      avatarPath = `media/image/grpp/${fileName}`;
     }
 
     // Mettre à jour le groupe
