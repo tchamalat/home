@@ -42,7 +42,7 @@ model Group {
   id            String    @id @default(cuid())
   name          String    @unique
   description   String?                         // Description du groupe (optionnel)
-  pp            Bytes?                          // Photo du groupe
+  avatarPath    String?                         // Chemin relatif de la photo du groupe (optionnel)
   createdAt     DateTime  @default(now())       // Date de création (auto)
 
   // Relations

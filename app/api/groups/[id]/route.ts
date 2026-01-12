@@ -74,8 +74,17 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
   try {
     const { id } = await params
-    const body = await request.json()
-    const { name, description, pp } = body
+    const body = request.formData ? await request.formData() : await request.json()
+    let name, description, file
+    if (body instanceof FormData) {
+      name = body.get('name')
+      description = body.get('description')
+      file = body.get('file') as File | null
+    } else {
+      name = body.name
+      description = body.description
+      file = null
+    }
 
     // Vérifier que le groupe existe
     const existing = await prisma.group.findUnique({ where: { id } })
@@ -94,13 +103,44 @@ export async function PUT(request: NextRequest, { params }: Params) {
       }
     }
 
+    // Gestion de l'image de groupe
+    let avatarPath = existing.avatarPath
+    if (file && file instanceof File && file.type === 'image/jpeg') {
+      const fs = require('fs');
+      const path = require('path');
+      const dir = path.join(process.cwd(), 'media', 'image', 'grpp');
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      // Historique : renomme l'ancienne image si elle existe
+      if (avatarPath) {
+        const oldPath = path.join(process.cwd(), avatarPath);
+        if (fs.existsSync(oldPath)) {
+          let i = 1, newOldPath;
+          do {
+            newOldPath = oldPath.replace(/\.jpg$/, `_old_${i}.jpg`);
+            i++;
+          } while (fs.existsSync(newOldPath));
+          fs.renameSync(oldPath, newOldPath);
+        }
+      }
+      // Génère un nom unique
+      let fileName, filePath;
+      do {
+        const uniqueId = Math.floor(10000000 + Math.random() * 90000000).toString();
+        fileName = `${uniqueId}.jpg`;
+        filePath = path.join(dir, fileName);
+      } while (fs.existsSync(filePath));
+      const arrayBuffer = await file.arrayBuffer();
+      fs.writeFileSync(filePath, Buffer.from(arrayBuffer));
+      avatarPath = `media/image/grpp/${fileName}`;
+    }
+
     // Mettre à jour le groupe
     const updatedGroup = await prisma.group.update({
       where: { id },
       data: {
         ...(name && { name }),
         ...(description !== undefined && { description: description || null }),
-        ...(pp !== undefined && { pp: pp ? Buffer.from(pp, 'base64') : null }),
+        avatarPath,
       },
       include: {
         _count: {
@@ -109,10 +149,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       },
     })
 
-    return NextResponse.json({
-      ...updatedGroup,
-      pp: updatedGroup.pp ? Buffer.from(updatedGroup.pp).toString('base64') : null,
-    })
+    return NextResponse.json({ ...updatedGroup })
   } catch (error) {
     console.error('Error updating group:', error)
     return NextResponse.json(

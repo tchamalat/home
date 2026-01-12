@@ -11,7 +11,7 @@ interface Group {
   id: string
   name: string
   description: string | null
-  pp: string | null // base64
+  avatarPath: string | null
   createdAt: string
   _count: {
     members: number
@@ -30,7 +30,7 @@ export default function AdminGroupsPage() {
   // Form state
   const [formName, setFormName] = useState('')
   const [formDescription, setFormDescription] = useState('')
-  const [formImage, setFormImage] = useState<string | null>(null)
+  const [formImage, setFormImage] = useState<File | null>(null)
   const [formError, setFormError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -63,20 +63,12 @@ export default function AdminGroupsPage() {
   function handleImageSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
-
-    // Limite 2MB
     if (file.size > 2 * 1024 * 1024) {
       setFormError('L\'image ne doit pas dépasser 2MB')
       return
     }
-
-    const reader = new FileReader()
-    reader.onload = () => {
-      const base64 = (reader.result as string).split(',')[1]
-      setFormImage(base64)
-      setFormError('')
-    }
-    reader.readAsDataURL(file)
+    setFormImage(file)
+    setFormError('')
   }
 
   async function handleCreate(e: React.FormEvent) {
@@ -91,16 +83,15 @@ export default function AdminGroupsPage() {
     setSubmitting(true)
 
     try {
+      const formData = new FormData()
+      formData.append('name', formName.trim())
+      formData.append('description', formDescription.trim() || '')
+      if (formImage) formData.append('avatar', formImage)
+
       const res = await fetch('/api/groups', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formName.trim(),
-          description: formDescription.trim() || null,
-          pp: formImage,
-        }),
+        body: formData,
       })
-
       if (res.ok) {
         const newGroup = await res.json()
         setGroups([newGroup, ...groups])
@@ -136,7 +127,7 @@ export default function AdminGroupsPage() {
   function openEditModal(group: Group) {
     setFormName(group.name)
     setFormDescription(group.description || '')
-    setFormImage(group.pp)
+    setFormImage(null)
     setEditingGroup(group)
   }
 
@@ -153,16 +144,15 @@ export default function AdminGroupsPage() {
     setSubmitting(true)
 
     try {
+      const formData = new FormData()
+      formData.append('name', formName.trim())
+      formData.append('description', formDescription.trim() || '')
+      if (formImage) formData.append('avatar', formImage)
+
       const res = await fetch(`/api/groups/${editingGroup.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: formName.trim(),
-          description: formDescription.trim() || null,
-          pp: formImage,
-        }),
+        body: formData,
       })
-
       if (res.ok) {
         const updatedGroup = await res.json()
         setGroups(groups.map(g => g.id === updatedGroup.id ? updatedGroup : g))
@@ -246,20 +236,28 @@ export default function AdminGroupsPage() {
               <div className="card-body">
                 <div className="flex items-start gap-4">
                   {/* Avatar du groupe */}
-                  {group.pp ? (
-                    <div className="avatar">
-                      <div className="w-14 rounded-xl">
+                  <div className="avatar">
+                    <div className="w-14 rounded-xl">
+                      {group.avatarPath ? (
                         <img 
-                          src={`data:image/png;base64,${group.pp}`} 
-                          alt={group.name}
+                          src={`/api/groups/${group.id}/avatar`}
+                          alt=""
+                          onError={e => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            target.parentElement?.appendChild(Object.assign(document.createElement('div'), {
+                              className: 'w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center',
+                              innerHTML: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"lucide lucide-users w-7 h-7 text-primary\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2m14-10a4 4 0 1 0-8 0 4 4 0 0 0 8 0zm6 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75\"/></svg>`
+                            }))
+                          }}
                         />
-                      </div>
+                      ) : (
+                        <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
+                          <Users className="w-7 h-7 text-primary" />
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
-                      <Users className="w-7 h-7 text-primary" />
-                    </div>
-                  )}
+                  </div>
 
                   <div className="flex-1 min-w-0">
                     <h2 className="card-title text-lg truncate">{group.name}</h2>
@@ -345,7 +343,7 @@ export default function AdminGroupsPage() {
                   {formImage ? (
                     <div className="relative">
                       <img 
-                        src={`data:image/png;base64,${formImage}`}
+                        src={URL.createObjectURL(formImage)}
                         alt="Preview"
                         className="w-16 h-16 rounded-xl object-cover"
                       />
