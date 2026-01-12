@@ -5,7 +5,7 @@
 
 @theme {
   --breakpoint-xs: 400px;
-  --breakpoint-smmd: 700px;
+  --breakpoint-smmd: 720px;
 }
 
 @keyframes fadeInScale {

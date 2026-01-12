@@ -20,13 +20,8 @@ export async function GET(request: NextRequest) {
       orderBy: { lastLogin: 'desc' },
     })
 
-    // Convertir les pp (Uint8Array) en base64 pour le JSON
-    const usersWithBase64 = users.map(user => ({
-      ...user,
-      pp: user.pp ? Buffer.from(user.pp).toString('base64') : null,
-    }))
-
-    return NextResponse.json(usersWithBase64)
+    // Expose avatarPath (chemin relatif)
+    return NextResponse.json(users)
   } catch (error) {
     console.error('Error fetching users:', error)
     return NextResponse.json(

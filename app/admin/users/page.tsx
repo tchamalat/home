@@ -1,5 +1,6 @@
 'use client'
 
+import Main from '@/components/Main'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -16,7 +17,7 @@ interface User {
   mail: string
   firstname: string
   lastname: string
-  pp: string | null // base64
+  avatarPath: string | null
   firstLogin: string | null
   lastLogin: string | null
   groups: Group[]
@@ -141,8 +142,7 @@ export default function AdminUsersPage() {
   }
 
   return (
-    <main className="flex flex-col gap-6">
-      {/* Header */}
+    <Main>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Link href="/admin" className="btn btn-ghost btn-circle">
@@ -189,20 +189,26 @@ export default function AdminUsersPage() {
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      {user.pp ? (
-                        <div className="avatar">
-                          <div className="w-10 rounded-full">
-                            <img 
-                              src={`data:image/png;base64,${user.pp}`}
+                      <div className="avatar">
+                        <div className="w-10 rounded-full">
+                          {user.avatarPath ? (
+                            <img
+                              src={`/api/users/${user.id}/avatar`}
                               alt={`${user.firstname} ${user.lastname}`}
+                              onError={e => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const fallback = document.createElement('div');
+                                fallback.className = 'w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center';
+                                fallback.innerHTML = `<svg xmlns='http://www.w3.org/2000/svg' class='lucide lucide-user-circle w-6 h-6 text-primary' fill='none' viewBox='0 0 24 24' stroke='currentColor'><circle cx='12' cy='12' r='10' stroke-width='2'/><circle cx='12' cy='10' r='3' stroke-width='2'/><path d='M6 18c0-2.21 3.582-4 6-4s6 1.79 6 4' stroke-width='2'/></svg>`;
+                                target.parentElement?.appendChild(fallback);
+                              }}
                             />
-                          </div>
+                          ) : (
+                            <UserCircle className="w-6 h-6 text-primary" />
+                          )}
                         </div>
-                      ) : (
-                        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                          <UserCircle className="w-6 h-6 text-primary" />
-                        </div>
-                      )}
+                      </div>
                       <div>
                         <div className="font-bold">
                           {user.firstname || user.lastname 
@@ -318,6 +324,6 @@ export default function AdminUsersPage() {
           </form>
         </dialog>
       )}
-    </main>
+    </Main>
   )
 }

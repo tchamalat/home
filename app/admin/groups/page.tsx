@@ -1,5 +1,6 @@
 'use client'
 
+import Main from '@/components/Main'
 import { useState, useEffect, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -206,7 +207,7 @@ export default function AdminGroupsPage() {
   }
 
   return (
-    <main className="flex flex-col gap-6">
+    <Main>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -569,6 +570,6 @@ export default function AdminGroupsPage() {
           </form>
         </dialog>
       )}
-    </main>
+    </Main>
   )
 }

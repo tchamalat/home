@@ -48,7 +48,7 @@ export default async function RootLayout({
     : false;
 
   return (
-    <html lang={locale} data-theme="night" className="bg-fixed bg-gradient-to-br from-base-100/80 via-primary/10 to-base-300/60">
+    <html lang={locale} data-theme="night" className="bg-fixed bg-linear-to-br from-base-100/80 via-primary/10 to-base-300/60">
       <body className="min-h-screen p-6 flex flex-col bg-base-100/80 text-base-content transition-colors duration-300">
         <SplashScreen
           welcomeText={
@@ -57,73 +57,6 @@ export default async function RootLayout({
               : dict["splash.welcome"]
           }
         />
-        {/*<header className="flex justify-between bg-base-100 mb-6 rounded-full px-3 py-3 shadow-sm w-full">
-          <div className="flex items-center gap-2">
-            <div className="drawer sm:hidden">
-              <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
-              <div className="drawer-content flex">
-                <label htmlFor="nav-drawer" className="btn btn-ghost btn-circle active:animate-ping">
-                  <Menu size={24} />
-                </label>
-                <NavLink href="/" className="text-2xl px-3 pt-1 rounded-full w-fit">{dict["nav.home"]}</NavLink>
-              </div>
-              <div className="drawer-side z-50">
-                <label htmlFor="nav-drawer" className="drawer-overlay"></label>
-                <DrawerNav 
-                  labels={{
-                    home: dict["nav.home"],
-                    projects: dict["nav.projects"],
-                    vert: dict["nav.vert"],
-                    dashboard: dict["nav.dashboard"],
-                    admin: dict["nav.admin"],
-                  }}
-                  showDashboard={Boolean(session)}
-                  showAdmin={isAdmin}
-                />
-              </div>
-            </div>
-
-            <HeaderNav 
-              labels={{
-                home: dict["nav.home"],
-                projects: dict["nav.projects"],
-                vert: dict["nav.vert"],
-                dashboard: dict["nav.dashboard"],
-                admin: dict["nav.admin"],
-              }}
-              showDashboard={Boolean(session)}
-              showAdmin={isAdmin}
-            />
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 drawer drawer-end">
-              <HeaderAuthButton 
-                session={session}
-                labels={{
-                  login: dict["action.login"],
-                  dashboard: dict["nav.dashboard"],
-                  logout: dict["action.logout"],
-                }}
-              />
-
-              <input id="settings-drawer" type="checkbox" className="drawer-toggle" />
-              <div className="drawer-content flex items-center">
-                <label htmlFor="settings-drawer" className="btn btn-ghost btn-circle active:animate-spin">
-                  <Settings size={24} />
-                </label>
-              </div>
-              <div className="drawer-side z-50">
-                <label htmlFor="settings-drawer" className="drawer-overlay"></label>
-                <DrawerSettings 
-                  locale={locale}
-                  labels={{ "lang.en": dict["lang.en"], "lang.fr": dict["lang.fr"] }}
-                />
-              </div>
-            </div>
-          </div>
-          
-        </header>*/}
         <Header
           labels={{
             home: dict["nav.home"],

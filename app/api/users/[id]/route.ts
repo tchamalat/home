@@ -23,10 +23,7 @@ export async function GET(request: NextRequest, { params }: Params) {
       return NextResponse.json({ error: 'Utilisateur non trouvé' }, { status: 404 })
     }
 
-    return NextResponse.json({
-      ...user,
-      pp: user.pp ? Buffer.from(user.pp).toString('base64') : null,
-    })
+    return NextResponse.json(user)
   } catch (error) {
     console.error('Error fetching user:', error)
     return NextResponse.json(
@@ -57,10 +54,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       },
     })
 
-    return NextResponse.json({
-      ...user,
-      pp: user.pp ? Buffer.from(user.pp).toString('base64') : null,
-    })
+    return NextResponse.json(user)
   } catch (error) {
     console.error('Error updating user:', error)
     return NextResponse.json(
