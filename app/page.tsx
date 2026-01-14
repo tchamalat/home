@@ -14,30 +14,29 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
 
   return (
-    <Main title={dict["home.title"]}>
+    <Main title={dict["home.title"]} isGsaped>
+      <Section title={dict["home.sectionWelcome.title"]}>
+        <p>{dict["home.sectionWelcome.text"]}</p>
+      </Section>
+      {session && (
+        <Section title={dict["home.sectionApps.title"]}>
+          <p>{dict["home.sectionApps.text"]}</p>
+          <Link className="btn btn-primary mt-4 rounded-full" href="/apps">
+            {dict["home.sectionApps.cta"]}
+          </Link>
+        </Section>
+      )}
+      <Section title={dict["home.sectionActiveDev.title"]}>
+        <p>{dict["home.sectionActiveDev.text"]}</p>
+      </Section>
+      <Section title={dict["home.sectionPersonalProjects.title"]} link="projects">
+        <p>{dict["home.sectionPersonalProjects.text"]}</p>
+      </Section>
       <Section title={dict["home.design_test.title"]} link="test">
         <p>
           {dict["home.design_test.text"]}
         </p>
       </Section>
-      <Section title={dict["home.section1.title"]}>
-        <p className="text-foreground"> 
-          {dict["home.section1.text"]}
-        </p>
-      </Section>
-      <Section title={dict["home.section2.title"]}>
-        <p>
-          {dict["home.section2.text"]}
-        </p>
-      </Section>
-      {session && (
-        <Section title={dict["home.sectionDashboard.title"]}>
-          <p>{dict["home.sectionDashboard.text"]}</p>
-          <Link className="btn btn-primary mt-4 rounded-full" href="/dashboard">
-            {dict["home.sectionDashboard.cta"]}
-          </Link>
-        </Section>
-      )}
     </Main>
   );
 }

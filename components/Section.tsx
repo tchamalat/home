@@ -16,7 +16,7 @@ export function Section({
   return (
     <section
       className={`p-6 flex flex-col space-y-4 bg-base-100/90 rounded-4xl
-        bg-gradient-to-br from-primary/10 via-base-100/80 to-base-300/60
+        bg-linear-to-br from-primary/20 via-base-100/80 to-base-300/60
         shadow-inner shadow-sm shadow-primary/20
         transition-transform duration-300
         hover:scale-102 transform
@@ -30,7 +30,7 @@ export function Section({
             href={link}
             className="rounded-full w-fit"
           >
-            <h2 className={`btn bg-base-300 py-1 px-3 rounded-full text-2xl font-bold h-fit`}>
+            <h2 className={`btn bg-primary/20 py-1 px-3 rounded-full text-2xl font-bold h-fit hover:border-primary border-2 transition-border duration-100`}>
               {title}
             </h2>
           </Link>

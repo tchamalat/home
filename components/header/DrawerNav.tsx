@@ -5,12 +5,12 @@ import gsap from "gsap"
 import NavLink from "@/components/header/NavLink"
 
 type Props = {
-  labels: Record<"home" | "projects" | "vert" | "dashboard" | "admin", string>;
-  showDashboard?: boolean;
+  labels: Record<"home" | "projects" | "vert" | "picture_app" | "admin", string>;
+  showPictureApp?: boolean;
   showAdmin?: boolean;
 }
 
-export default function DrawerNav({ labels, showDashboard = false, showAdmin = false }: Props) {
+export default function DrawerNav({ labels, showPictureApp = false, showAdmin = false }: Props) {
   const drawerRef = useRef(null);
   const closeDrawer = () => {
     const checkbox = document.getElementById("nav-drawer") as HTMLInputElement | null
@@ -44,7 +44,7 @@ export default function DrawerNav({ labels, showDashboard = false, showAdmin = f
           {labels.projects}
         </NavLink>
       </li>
-      <li>
+      {/*<li>
         <NavLink
           href="https://vert.romantcham.fr"
           onClick={closeDrawer}
@@ -53,11 +53,11 @@ export default function DrawerNav({ labels, showDashboard = false, showAdmin = f
         >
           {labels.vert}
         </NavLink>
-      </li>
-      {showDashboard && (
+      </li>*/}
+      {showPictureApp && (
         <li>
-          <NavLink href="/dashboard" onClick={closeDrawer} className="rounded-full w-fit">
-            {labels.dashboard}
+          <NavLink href="/apps" onClick={closeDrawer} className="rounded-full w-fit">
+            {labels.picture_app}
           </NavLink>
         </li>
       )}

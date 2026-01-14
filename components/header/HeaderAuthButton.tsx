@@ -8,7 +8,7 @@ import { User } from "lucide-react";
 
 type Props = {
   session: Session | null;
-  labels: Record<"login" | "dashboard" | "logout", string>;
+  labels: Record<"login" | "picture_app" | "logout" | "account", string>;
 };
 
 export default function HeaderAuthButton({ session, labels }: Props) {
@@ -32,7 +32,7 @@ export default function HeaderAuthButton({ session, labels }: Props) {
       <button
         tabIndex={0}
         className="btn btn-ghost btn-circle"
-        aria-label={labels.dashboard}
+        aria-label={labels.picture_app}
       >
         <div className="avatar">
           <div className="w-10 rounded-full overflow-hidden ring-2 ring-transparent ring-offset-2 ring-offset-base-100 group-focus-within:ring-primary transition-all flex items-center justify-center bg-base-300">
@@ -44,9 +44,18 @@ export default function HeaderAuthButton({ session, labels }: Props) {
           </div>
         </div>
       </button>
-      <ul className="menu menu-sm dropdown-content z-50 mt-6 p-2 shadow border-2 border-primary/40 bg-base-100/95 rounded-box w-52 translate-x-15">
+      <ul className="menu menu-sm dropdown-content z-50 mt-8 p-2 shadow border-2 border-primary/40 bg-base-100/95 rounded-box w-52 translate-x-15">
         <li>
-          <button onClick={() => signOut({ callbackUrl: "/" })}>{labels.logout}</button>
+          <Link href="/account">
+            {labels.account}
+          </Link>
+        </li>
+        <li>
+          <button onClick={() => signOut({ callbackUrl: "/" })}
+                  className="hover:bg-red-700/35"
+          >
+            {labels.logout}
+          </button>
         </li>
       </ul>
     </div>

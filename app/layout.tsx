@@ -62,16 +62,17 @@ export default async function RootLayout({
             home: dict["nav.home"],
             projects: dict["nav.projects"],
             vert: dict["nav.vert"],
-            dashboard: dict["nav.dashboard"],
+            picture_app: dict["nav.picture_app"],
             admin: dict["nav.admin"],
           }}
-          showDashboard={Boolean(session)}
+          showPictureApp={Boolean(session)}
           showAdmin={isAdmin}
           session={session}
           authLabels={{
             login: dict["action.login"],
-            dashboard: dict["nav.dashboard"],
+            picture_app: dict["nav.picture_app"],
             logout: dict["action.logout"],
+            account: dict["action.account"],
           }}
           locale={locale}
           langlabels={{ "lang.en": dict["lang.en"], "lang.fr": dict["lang.fr"] }}

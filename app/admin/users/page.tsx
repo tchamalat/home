@@ -1,6 +1,7 @@
 'use client'
 
 import Main from '@/components/Main'
+import { Section } from '@/components/Section'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -143,7 +144,7 @@ export default function AdminUsersPage() {
 
   return (
     <Main>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <Link href="/admin" className="btn btn-ghost btn-circle">
             <ArrowLeft className="w-5 h-5" />
@@ -153,8 +154,7 @@ export default function AdminUsersPage() {
         <div className="badge badge-primary badge-lg">{users.length} utilisateurs</div>
       </div>
 
-      {/* Table */}
-      <div className="card bg-base-100 shadow-xl overflow-x-auto">
+      <Section className="overflow-x-auto">
         <table className="table table-zebra">
           <thead>
             <tr>
@@ -273,16 +273,14 @@ export default function AdminUsersPage() {
             ))}
           </tbody>
         </table>
-      </div>
+      </Section>
 
-      {/* Modal gestion des groupes */}
       {groupModalUser && (
         <dialog className="modal modal-open">
           <div className="modal-box">
             <h3 className="font-bold text-lg mb-4">
               Groupes de {groupModalUser.firstname || groupModalUser.mail}
             </h3>
-            
             <div className="space-y-2 max-h-64 overflow-y-auto">
               {groups.length === 0 ? (
                 <p className="text-center opacity-50 py-4">
@@ -309,7 +307,6 @@ export default function AdminUsersPage() {
                 ))
               )}
             </div>
-
             <div className="modal-action">
               <button onClick={() => setGroupModalUser(null)} className="btn btn-ghost">
                 Annuler

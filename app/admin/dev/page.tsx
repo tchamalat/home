@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Main from "@/components/Main"
 import { Section } from "@/components/Section";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import DockerLogs from "@/components/DockerLogs";
 import { cookies } from "next/headers";
 import { defaultLocale, getDictionary, isLocale, Locale, filterDictByPrefix } from "@/lib/i18n";
@@ -27,13 +29,10 @@ export default async function Dev() {
   const dict = getDictionary(locale);
   const session = await getServerSession(authOptions);
 
-  // Vérification 1: Utilisateur authentifié
   if (!session?.user) {
     redirect("/login");
   }
 
-  // Vérification 2: L'utilisateur est admin (vérifié directement côté serveur)
-  // On ne dépend PAS de session.user.isAdmin mais on vérifie directement
   const isAdmin = isAdminEmail(session.user.email);
   
   if (!isAdmin) {
@@ -41,7 +40,13 @@ export default async function Dev() {
   }
 
   return (
-    <Main title={dict["dev.title"]}>
+    <Main>
+      <div className="flex items-center gap-4 mb-6">
+        <Link href="/admin" className="btn btn-ghost btn-circle">
+          <ArrowLeft className="w-5 h-5" />
+        </Link>
+        <h1 className="text-2xl font-bold">{dict["dev.title"]}</h1>
+      </div>
       <Section title={dict["dev.section1.title"]}>
         <p className="text-foreground"> 
           {dict["dev.section1.text"]}

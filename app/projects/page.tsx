@@ -3,7 +3,7 @@ import Main from "@/components/Main"
 import { Section } from "@/components/Section";
 import Image from "next/image";
 import { cookies } from "next/headers";
-import { defaultLocale, getDictionary, isLocale, Locale, filterDictByPrefix } from "@/lib/i18n";
+import { defaultLocale, getDictionary, isLocale, Locale } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
   const cookieStore = cookies();
@@ -24,7 +24,7 @@ export default async function Projects() {
   const dict = getDictionary(locale);
 
   return (
-    <Main title={dict["projects.title"]}>
+    <Main title={dict["projects.title"]} isGsaped>
       <Section title={dict["projects.section1.title"]}>
         <p className="text-foreground"> 
           {dict["projects.section1.text"]}

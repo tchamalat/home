@@ -1,6 +1,7 @@
 'use client'
 
 import Main from '@/components/Main'
+import { Section } from '@/components/Section'
 import { useState, useEffect, useRef } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -27,7 +28,6 @@ export default function AdminGroupsPage() {
   const [editingGroup, setEditingGroup] = useState<Group | null>(null)
   const [deleteConfirm, setDeleteConfirm] = useState<Group | null>(null)
   
-  // Form state
   const [formName, setFormName] = useState('')
   const [formDescription, setFormDescription] = useState('')
   const [formImage, setFormImage] = useState<File | null>(null)
@@ -198,8 +198,7 @@ export default function AdminGroupsPage() {
 
   return (
     <Main>
-      {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
           <Link href="/admin" className="btn btn-ghost btn-circle">
             <ArrowLeft className="w-5 h-5" />
@@ -214,100 +213,92 @@ export default function AdminGroupsPage() {
         </button>
       </div>
 
-      {/* Grille des groupes */}
       {groups.length === 0 ? (
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body items-center text-center py-12">
-            <Users className="w-16 h-16 opacity-30 mb-4" />
-            <h2 className="text-xl font-semibold">Aucun groupe</h2>
-            <p className="opacity-70">Créez votre premier groupe pour commencer</p>
-            <button 
-              onClick={() => setShowCreateModal(true)} 
-              className="btn btn-primary mt-4"
-            >
-              <Plus className="w-4 h-4" /> Créer un groupe
-            </button>
-          </div>
-        </div>
+        <Section className="items-center text-center py-12">
+          <Users className="w-16 h-16 opacity-30 mb-4" />
+          <h2 className="text-xl font-semibold">Aucun groupe</h2>
+          <p className="opacity-70">Créez votre premier groupe pour commencer</p>
+          <button 
+            onClick={() => setShowCreateModal(true)} 
+            className="btn btn-primary mt-4"
+          >
+            <Plus className="w-4 h-4" /> Créer un groupe
+          </button>
+        </Section>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {groups.map(group => (
-            <div key={group.id} className="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow">
-              <div className="card-body">
-                <div className="flex items-start gap-4">
-                  {/* Avatar du groupe */}
-                  <div className="avatar">
-                    <div className="w-14 rounded-xl">
-                      {group.avatarPath ? (
-                        <img 
-                          src={`/api/groups/${group.id}/avatar?${Date.now()}`}
-                          alt=""
-                          onError={e => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            target.parentElement?.appendChild(Object.assign(document.createElement('div'), {
-                              className: 'w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center',
-                              innerHTML: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"lucide lucide-users w-7 h-7 text-primary\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2m14-10a4 4 0 1 0-8 0 4 4 0 0 0 8 0zm6 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75\"/></svg>`
-                            }))
-                          }}
-                        />
-                      ) : (
-                        <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
-                          <Users className="w-7 h-7 text-primary" />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <h2 className="card-title text-lg truncate">{group.name}</h2>
-                    {group.description && (
-                      <p className="text-sm opacity-70 line-clamp-2">{group.description}</p>
+            <Section key={group.id} className="hover:shadow-2xl transition-shadow">
+              <div className="flex items-start gap-4">
+                <div className="avatar">
+                  <div className="w-14 rounded-xl">
+                    {group.avatarPath ? (
+                      <img 
+                        src={`/api/groups/${group.id}/avatar?${Date.now()}`}
+                        alt=""
+                        onError={e => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          target.parentElement?.appendChild(Object.assign(document.createElement('div'), {
+                            className: 'w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center',
+                            innerHTML: `<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"lucide lucide-users w-7 h-7 text-primary\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2m14-10a4 4 0 1 0-8 0 4 4 0 0 0 8 0zm6 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75\"/></svg>`
+                          }))
+                        }}
+                      />
+                    ) : (
+                      <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center">
+                        <Users className="w-7 h-7 text-primary" />
+                      </div>
                     )}
                   </div>
                 </div>
 
-                <div className="divider my-2"></div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-sm opacity-70">
-                    <span className="flex items-center gap-1">
-                      <Users className="w-4 h-4" />
-                      {group._count.members} membre{group._count.members > 1 ? 's' : ''}
-                    </span>
-                    <span>Créé le {formatDate(group.createdAt)}</span>
-                  </div>
-
-                  <div className="flex gap-1">
-                    <button 
-                      onClick={() => openEditModal(group)}
-                      className="btn btn-ghost btn-sm hover:bg-primary/20"
-                    >
-                      <Pencil className="w-4 h-4" />
-                    </button>
-                    <button 
-                      onClick={() => setDeleteConfirm(group)}
-                      className="btn btn-ghost btn-sm text-error hover:bg-error/20"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+                <div className="flex-1 min-w-0">
+                  <h2 className="card-title text-lg truncate">{group.name}</h2>
+                  {group.description && (
+                    <p className="text-sm opacity-70 line-clamp-2">{group.description}</p>
+                  )}
                 </div>
               </div>
-            </div>
+
+              <div className="divider my-2"></div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4 text-sm opacity-70">
+                  <span className="flex items-center gap-1">
+                    <Users className="w-4 h-4" />
+                    {group._count.members} membre{group._count.members > 1 ? 's' : ''}
+                  </span>
+                  <span>Créé le {formatDate(group.createdAt)}</span>
+                </div>
+
+                <div className="flex gap-1">
+                  <button 
+                    onClick={() => openEditModal(group)}
+                    className="btn btn-ghost btn-sm hover:bg-primary/20"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => setDeleteConfirm(group)}
+                    className="btn btn-ghost btn-sm text-error hover:bg-error/20"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </Section>
           ))}
         </div>
       )}
 
-      {/* Modal création */}
       {showCreateModal && (
         <dialog className="modal modal-open">
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">Créer un groupe</h3>
+            <h3 className="font-bold text-lg mb-6">Créer un groupe</h3>
             
-            <form onSubmit={handleCreate} className="space-y-4">
-              {/* Nom */}
-              <div className="form-control">
+            <form onSubmit={handleCreate} className="space-y-6">
+              <div className="form-control flex">
                 <label className="label">
                   <span className="label-text">Nom du groupe *</span>
                 </label>
@@ -315,31 +306,29 @@ export default function AdminGroupsPage() {
                   type="text"
                   value={formName}
                   onChange={e => setFormName(e.target.value)}
-                  className="input input-bordered"
+                  className="input input-bordered ml-auto"
                   placeholder="Ex: Famille, Amis proches..."
                 />
               </div>
 
-              {/* Description */}
-              <div className="form-control">
+              <div className="form-control flex">
                 <label className="label">
                   <span className="label-text">Description</span>
                 </label>
                 <textarea
                   value={formDescription}
                   onChange={e => setFormDescription(e.target.value)}
-                  className="textarea textarea-bordered"
+                  className="textarea textarea-bordered ml-auto"
                   placeholder="Description optionnelle du groupe"
                   rows={3}
                 />
               </div>
 
-              {/* Image */}
-              <div className="form-control">
+              <div className="form-control flex">
                 <label className="label">
                   <span className="label-text">Photo du groupe (optionnel)</span>
                 </label>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 ml-auto">
                   <div className="relative">
                     {formImage ? (
                       <img
@@ -389,19 +378,17 @@ export default function AdminGroupsPage() {
                     Choisir une image
                   </button>
                 </div>
-                <label className="label">
-                  <span className="label-text-alt opacity-50">Max 2MB, formats: JPG, PNG, GIF</span>
-                </label>
               </div>
+              <label className="label">
+                <span className="label-text-alt opacity-50">Max 2MB, formats: JPG, PNG, GIF</span>
+              </label>
 
-              {/* Erreur */}
               {formError && (
                 <div className="alert alert-error">
                   <span>{formError}</span>
                 </div>
               )}
 
-              {/* Actions */}
               <div className="modal-action">
                 <button 
                   type="button" 
@@ -427,15 +414,13 @@ export default function AdminGroupsPage() {
         </dialog>
       )}
 
-      {/* Modal édition */}
       {editingGroup && (
         <dialog className="modal modal-open">
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">Modifier le groupe</h3>
+            <h3 className="font-bold text-lg mb-6 text-center">Modifier le groupe</h3>
             
-            <form onSubmit={handleEdit} className="space-y-4">
-              {/* Nom */}
-              <div className="form-control">
+            <form onSubmit={handleEdit} className="space-y-6">
+              <div className="form-control flex">
                 <label className="label">
                   <span className="label-text">Nom du groupe *</span>
                 </label>
@@ -443,31 +428,29 @@ export default function AdminGroupsPage() {
                   type="text"
                   value={formName}
                   onChange={e => setFormName(e.target.value)}
-                  className="input input-bordered"
+                  className="ml-auto input input-bordered"
                   placeholder="Ex: Famille, Amis proches..."
                 />
               </div>
 
-              {/* Description */}
-              <div className="form-control">
+              <div className="form-control flex">
                 <label className="label">
                   <span className="label-text">Description</span>
                 </label>
                 <textarea
                   value={formDescription}
                   onChange={e => setFormDescription(e.target.value)}
-                  className="textarea textarea-bordered"
+                  className="ml-auto textarea textarea-bordered"
                   placeholder="Description optionnelle du groupe"
                   rows={3}
                 />
               </div>
 
-              {/* Image */}
-              <div className="form-control">
+              <div className="form-control flex">
                 <label className="label">
                   <span className="label-text">Photo du groupe</span>
                 </label>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 ml-auto">
                   <div className="relative">
                     {formImage ? (
                       <img
@@ -517,19 +500,17 @@ export default function AdminGroupsPage() {
                     Choisir une image
                   </button>
                 </div>
-                <label className="label">
-                  <span className="label-text-alt opacity-50">Max 2MB, formats: JPG, PNG, GIF</span>
-                </label>
               </div>
+              <label className="label">
+                <span className="label-text-alt opacity-50">Max 2MB, formats: JPG, PNG, GIF</span>
+              </label>
 
-              {/* Erreur */}
               {formError && (
                 <div className="alert alert-error">
                   <span>{formError}</span>
                 </div>
               )}
 
-              {/* Actions */}
               <div className="modal-action">
                 <button 
                   type="button" 
@@ -555,7 +536,6 @@ export default function AdminGroupsPage() {
         </dialog>
       )}
 
-      {/* Modal confirmation suppression */}
       {deleteConfirm && (
         <dialog className="modal modal-open">
           <div className="modal-box">

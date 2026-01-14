@@ -19,11 +19,12 @@
   "nav.dev": "Dev",
   "nav.projects": "Projets",
   "nav.vert": "Vert",
-  "nav.dashboard": "Tableau de bord",
+  "nav.picture_app": "Apps",
   "nav.admin": "Admin",
 
   "action.login": "Connexion",
   "action.logout": "Déconnexion",
+  "action.account": "Mon compte",
   "action.settings": "Paramètres",
 
   "crackle.title": "Test avec IA",
@@ -43,9 +44,16 @@
   "home.section1.text": "Bonjour, je suis Roman et j'ai créé ce site pour mon usage personnel et en tant que portfolio.",
   "home.section2.title": "Que contient ce site",
   "home.section2.text": "Ce site contient certains de mes projets personnels, un centre de développement, et la connexion permet à ma famille et mes amis d'utiliser certains outils utiles.",
-  "home.sectionDashboard.title": "Votre espace personnel",
-  "home.sectionDashboard.text": "Retrouvez vos outils et sections privées en un clic.",
-  "home.sectionDashboard.cta": "Ouvrir le tableau de bord",
+  "home.sectionApps.title": "Apps",
+  "home.sectionApps.text": "Retrouvez vos apps personnelles et vos outils privés en un clic.",
+  "home.sectionApps.cta": "Ouvrir les applications",
+  "home.sectionWelcome.title": "Bienvenu sur romantcham.fr",
+  "home.sectionWelcome.text": "Ce site est mon portfolio de développement Web et une banque d'outils web et un cloud pour mon et mes proches.",
+  "home.sectionActiveDev.title": "Développement actif",
+  "home.sectionActiveDev.text": "J'améliore ce projet de jours en jour pour en apprendre plus sur la création et le déploiement de site web.",
+  "home.sectionPersonalProjects.title": "Mes projets personnels",
+  "home.sectionPersonalProjects.text": "C'est sur cette page que je présente certain de mes projets personnels.",
+  "home.sectionPersonalProjects.link": "Vers la page des projets",
 
   "dev.title": "Centre de Dev",
   "dev.section1.title": "Développons un peu.",
@@ -74,5 +82,14 @@
   "dockerlogs.connected": "Connecté",
   "dockerlogs.disconnected": "Déconnecté",
   "dockerlogs.clear": "Effacer",
-  "dockerlogs.waiting": "En attente de logs..."
+  "dockerlogs.waiting": "En attente de logs...",
+
+  "account.title": "Mon compte",
+  "account.avatar.alt": "Avatar utilisateur",
+  "account.data.title": "Données du compte",
+  "account.data.email": "Email",
+  "account.data.name": "Nom",
+  "account.data.admin": "Admin",
+  "account.data.admin.yes": "Oui",
+  "account.data.firstlogin": "Première connexion"
 }

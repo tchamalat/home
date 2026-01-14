@@ -19,11 +19,12 @@
   "nav.dev": "Dev",
   "nav.projects": "Projects",
   "nav.vert": "Vert",
-  "nav.dashboard": "Dashboard",
+  "nav.picture_app": "Apps",
   "nav.admin": "Admin",
 
   "action.login": "Login",
   "action.logout": "Logout",
+  "action.account": "My account",
   "action.settings": "Settings",
 
   "crackle.title": "Test with AI",
@@ -43,9 +44,16 @@
   "home.section1.text": "Hello, I'm Roman and I created this website for my own use and as a portfolio piece.",
   "home.section2.title": "What does this site contain",
   "home.section2.text": "This site contains some of my personal projects, a dev center, and the login allows my family and friends to use some useful tools.",
-  "home.sectionDashboard.title": "Your personal dashboard",
-  "home.sectionDashboard.text": "Jump back into your private tools and spaces.",
-  "home.sectionDashboard.cta": "Open dashboard",
+  "home.sectionApps.title": "Apps",
+  "home.sectionApps.text": "Jump back into your personal apps.",
+  "home.sectionApps.cta": "Open apps",
+  "home.sectionWelcome.title": "Welcome to romantcham.fr",
+  "home.sectionWelcome.text": "This site is my web development portfolio, a web tools bank, and a cloud for myself and my close ones.",
+  "home.sectionActiveDev.title": "Active development",
+  "home.sectionActiveDev.text": "I improve this project day by day to learn more about building and deploying websites.",
+  "home.sectionPersonalProjects.title": "My personal projects",
+  "home.sectionPersonalProjects.text": "This is the page where I present some of my personal projects.",
+  "home.sectionPersonalProjects.link": "To the projects page",
 
   "dev.title": "Dev center",
   "dev.section1.title": "Let's dev a little.",
@@ -74,5 +82,14 @@
   "dockerlogs.connected": "Connected",
   "dockerlogs.disconnected": "Disconnected",
   "dockerlogs.clear": "Clear",
-  "dockerlogs.waiting": "Waiting for logs..."
+  "dockerlogs.waiting": "Waiting for logs...",
+
+  "account.title": "My account",
+  "account.avatar.alt": "User avatar",
+  "account.data.title": "Account data",
+  "account.data.email": "Email",
+  "account.data.name": "Name",
+  "account.data.admin": "Admin",
+  "account.data.admin.yes": "Yes",
+  "account.data.firstlogin": "First login"
 }

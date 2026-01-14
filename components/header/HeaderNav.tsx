@@ -3,12 +3,12 @@
 import NavLink from "./NavLink";
 
 type Props = {
-  labels: Record<"home" | "projects" | "vert" | "dashboard" | "admin", string>;
-  showDashboard?: boolean;
+  labels: Record<"home" | "projects" | "vert" | "picture_app" | "admin", string>;
+  showPictureApp?: boolean;
   showAdmin?: boolean;
 };
 
-export default function HeaderNav({ labels, showDashboard = false, showAdmin = false }: Props) {
+export default function HeaderNav({ labels, showPictureApp = false, showAdmin = false }: Props) {
   
   return (
     <nav className="hidden smmd:flex gap-2 font-semibold">
@@ -27,20 +27,20 @@ export default function HeaderNav({ labels, showDashboard = false, showAdmin = f
       >
         <span>{labels.projects}</span>
       </NavLink>
-      <NavLink
+      {/*<NavLink
         href="https://vert.romantcham.fr"
         className="rounded-full"
         external
       >
         <span>{labels.vert}</span>
-      </NavLink>
-      {showDashboard && (
+      </NavLink>*/}
+      {showPictureApp && (
         <NavLink
-          href="/dashboard"
+          href="/apps"
           className="rounded-full"
           activeClassName="bg-primary/20 text-primary"
         >
-          <span>{labels.dashboard}</span>
+          <span>{labels.picture_app}</span>
         </NavLink>
       )}
       {showAdmin && (

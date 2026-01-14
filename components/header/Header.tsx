@@ -12,16 +12,16 @@ import NavLink from "./NavLink";
 import DrawerNav from "./DrawerNav";
 
 type HeaderProps = {
-  labels: Record<"home" | "projects" | "vert" | "dashboard" | "admin", string>;
-  showDashboard?: boolean;
+  labels: Record<"home" | "projects" | "vert" | "picture_app" | "admin", string>;
+  showPictureApp?: boolean;
   showAdmin?: boolean;
   session: Session | null;
-  authLabels: Record<"login" | "dashboard" | "logout", string>;
+  authLabels: Record<"login" | "picture_app" | "logout" | "account", string>;
   locale: Locale;
   langlabels: Record<"lang.en" | "lang.fr", string>;
 };
 
-export default function Header({ labels, showDashboard, showAdmin, session, authLabels, locale, langlabels }: HeaderProps) {
+export default function Header({ labels, showPictureApp, showAdmin, session, authLabels, locale, langlabels }: HeaderProps) {
   const leftRef = useRef(null);
   const rightRef = useRef(null);  
 
@@ -74,7 +74,7 @@ export default function Header({ labels, showDashboard, showAdmin, session, auth
               <label htmlFor="nav-drawer" className="drawer-overlay"></label>
               <DrawerNav 
                 labels={labels}
-                showDashboard={showDashboard}
+                showPictureApp={showPictureApp}
                 showAdmin={showAdmin}
               />
             </div>
@@ -82,7 +82,7 @@ export default function Header({ labels, showDashboard, showAdmin, session, auth
 
           <HeaderNav 
             labels={labels}
-            showDashboard={showDashboard}
+            showPictureApp={showPictureApp}
             showAdmin={showAdmin}
           />
         </div>
